@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<div id="global" class="container">
+
+    <form th:action="@{/user/addUser}" th:object="${user}" method="post">
+        <fieldset>
+            <h2> Seller Registration Form</h2>
+            <div class="container" id="div-style">
+            <div class="form-group">
+                <label th:text="#{firstname}" for="firstname">First Name:</label>
+                <input type="text" id="firstName" name="firstName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label th:text="#{lastname}" for="lastName">Last Name:</label>
+                <input type="text" name="lastName" id="lastName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label th:text="#{email}" for="email">Email :</label>
+                <input type="email" name="email" id="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label th:text="#{phone}" for="phone">Phone Number</label>
+                <input type="text" name="phone" id="phone" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label th:text="#{dob}" for="dateOfBirth">Date Of Birth</label>
+                <input type="date" name="dateOfBirth" id="dateOfBirth" pattern="yyyy-MM-dd" class="form-control">
+            </div>
+
+            <div class="forn-group">
+                <label th:text="#{username}" for="username">UserName</label>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+            <div class="forn-group">
+                <label th:text="#{password}" for="password">Password:</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <div class="forn-group">
+                <label th:text="#{street}" for="address.street">Street</label>
+                <input type="text" name="address.street" id="address.street" class="form-control">
+            </div>
+            <div class="forn-group">
+                <label th:text="#{city}" for="address.city">City:</label>
+                <input type="text" name="address.city" id="address.city" class="form-control">
+            </div>
+            <div class="forn-group">
+                <label th:text="#{state}" for="address.state">State:</label>
+                <input type="text" name="address.state" id="address.state" class="form-control">
+            </div>
+            <div class="forn-group">
+                <label th:text="#{zipcode}" for="address.zipCode">ZipCode:</label>
+                <input type="text" name="address.zipCode" id="address.zipCode" class="form-control">
+            </div>
+            <input class="buttun-style btn btn-primary" type="submit" id="sellerSubmitBtn" value="Add Seller">
+            <input type="reset" class="btn btn-primary" value="Reset">
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</body>
+</html>
