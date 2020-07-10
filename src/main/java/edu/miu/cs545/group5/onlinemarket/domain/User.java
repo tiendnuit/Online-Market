@@ -13,13 +13,13 @@ public abstract class User implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty
+    @NotBlank
     private String firstName;
 
-    @NotEmpty
+    @NotBlank
     private String lastName;
 
-    @NotEmpty
+    @NotBlank
     @Email
     private String email;
 

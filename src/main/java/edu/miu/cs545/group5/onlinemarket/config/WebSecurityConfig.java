@@ -12,6 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] lists = {"/",
+                "/css/**", "/js/**", "/images/**",
+                "/h2-console/**"};
 
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(lists).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .headers().frameOptions().disable();
     }
 }

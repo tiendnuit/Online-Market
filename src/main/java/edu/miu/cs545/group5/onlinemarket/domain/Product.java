@@ -11,7 +11,7 @@ public class Product implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty
+    @NotBlank
     private String name;
 
     @NotNull
@@ -20,10 +20,10 @@ public class Product implements Serializable {
     @NotEmpty
     private Integer stock;
 
-    @NotEmpty
+    @NotBlank
     private String description;
 
-    @NotEmpty
+    @NotBlank
     private String image;
 
     @ManyToOne
