@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter
 @AllArgsConstructor
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
@@ -38,6 +37,7 @@ public class User implements Serializable {
     @Pattern(regexp="\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX")
     protected String phone;
 
+    @NotNull
     @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     protected LocalDate birthDate;
@@ -77,12 +77,60 @@ public class User implements Serializable {
         this.active = active;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getPassword() {
@@ -93,14 +141,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-
     public String getRole() {
         return role;
     }
@@ -109,11 +149,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Address getAddress() {
-        return address;
+    public int getActive() {
+        return active;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setActive(int active) {
+        this.active = active;
     }
 }
