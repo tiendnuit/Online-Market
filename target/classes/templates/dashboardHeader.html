@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="dashboardHeaderBar">
+<header class="header-top navbar fixed-top">
+    <div class="navbar-header">
+
+    </div>
+</header>
+<aside class="side-navigation-wrap sidebar-fixed">  <!-- START: Side Navigation -->
+    <div class="sidenav-inner">
+
+        <ul>
+            <div style="margin-top: 15px;">
+                <li class="has-submenu">
+                    <a th:href="@{/product/productList/1}">
+                        <span class="nav-text">Manage Product</span>
+                    </a>
+                </li>
+            </div>
+            <!--/*@thymesVar id="approved" type=""*/-->
+            <!--<li th:if="${seller.approved == true}">-->
+            <li>
+                <a th:href="@{/product/productAddForm}">
+                    <span class="nav-text">Add Product</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-toggle="collapse" aria-expanded="false">
+                    <span class="nav-text">Manage Orders</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/category/categoryInputForm}">
+                    <span class="nav-text">Add Category</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+</div>
+</body>
+</html>
