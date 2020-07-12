@@ -1,5 +1,12 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import edu.miu.cs545.group5.onlinemarket.config.Constants;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -7,60 +14,67 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Getter @Setter
+@AllArgsConstructor
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public abstract class User implements Serializable {
+//@DiscriminatorColumn(
+//        name="user_role",
+//        discriminatorType=DiscriminatorType.STRING )
+public class User implements Serializable {
     @Id
     @GeneratedValue
-    private Long id;
+    protected Long id;
 
     @NotBlank
-    private String firstName;
+    protected String firstName;
 
     @NotBlank
-    private String lastName;
+    protected String lastName;
 
     @NotBlank
     @Email
-    private String email;
+    protected String email;
 
     @Pattern(regexp="\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX")
-    private String phone;
+    protected String phone;
 
     @Past
-    private LocalDate birthDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    protected LocalDate birthDate;
 
     @Size(min=6, message = "Password must be 6 characters")
-    private String password;
+    protected String password;
 
     @Valid
     @Embedded
-    private Address address;
+    protected Address address;
+
+    protected String role;
+
+    @Column(name = "active")
+    private int active;
 
     public User() {
+        role = Constants.ROLE_ADMIN;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
+    public User(@NotBlank String firstName,
+                @NotBlank String lastName,
+                @NotBlank @Email String email,
+                @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX") String phone,
+                @Past LocalDate birthDate,
+                @Size(min = 6, message = "Password must be 6 characters") String password,
+                @Valid Address address,
+                String role, int active) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.password = password;
+        this.address = address;
+        this.role = role;
+        this.active = active;
     }
 
     public String getEmail() {
@@ -71,27 +85,27 @@ public abstract class User implements Serializable {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

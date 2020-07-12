@@ -1,5 +1,8 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -23,4 +26,12 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn
     private Buyer buyer;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

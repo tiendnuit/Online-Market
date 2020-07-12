@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">HomePage</title>
+</head>
+<body>
+    <p> Welcome Buyer, Online Market!</p>
+    <p><a href="#" th:href="@{/buyer/sendEmail}">Send Email</a></p>
+    <p><a href="#" th:href="@{/logout}">Logout</a></p>
+
+</body>
+</html>
