@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class Buyer extends User {
     private int point = 0;
     private boolean follow = false;
+    private boolean approved = false;
 
     @OneToOne
     private ShoppingCart shoppingCart;
@@ -47,5 +48,13 @@ public class Buyer extends User {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

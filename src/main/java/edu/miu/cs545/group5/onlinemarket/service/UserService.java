@@ -11,9 +11,10 @@ public interface UserService {
     List<User> getAll();
     Optional<User> getById(long id);
     Optional<User> getByEmail(String email);
-
     void update(User user);
     void save(User user);
+    List<? extends User> getAllApprovedUsers();
+    List<? extends User> getNotApprovedUsers();
 
 
     void delete(String id);

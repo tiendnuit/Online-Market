@@ -5,9 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
+import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.domain.dto.SellerResponse;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
+import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,9 @@ public class AdminController {
 
     @Autowired
     SellerService sellerService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String main(Model model) {
@@ -32,15 +38,6 @@ public class AdminController {
         } else{ return "_tab2";}
     }
 
-
-//    @ModelAttribute("unapprovedSellers")
-//    public String getAllUnapprovedSellers(Model model){
-//        List<SellerResponse> unapprovedSellers = sellerService.getAllSellersByApprovedIsEqualFalse();
-//        model.addAttribute("unapprovedSellers", unapprovedSellers);
-//
-//        return "_tab1";
-//    }
-
     @ModelAttribute("unapprovedSellers")
     List<SellerResponse> unapprovedSellers(Model model) {
         return      Arrays.asList(
@@ -51,14 +48,29 @@ public class AdminController {
         );
     }
 
-        public void ApproveSeller(@RequestParam Long id) {
-         Seller approveSeller = sellerService.getSellerById(id).get();
-            if(approveSeller.isApproved()==false)
-                approveSeller.setApproved(true);
+    @ModelAttribute("approvedUsers")
+    public List<? extends User> activeUsers(Model model){
+        return userService.getAllApprovedUsers();
     }
 
-//    public String listUnapprovedSellers(Model model ) {
-//        return "_tab1";
-//    }
+    @ModelAttribute("notApprovedUsers")
+    public List<? extends User> notActiveUsers(Model model) {
+        return userService.getNotApprovedUsers();
+
+    }
+    public void updateUser(Long id){
+
+        User user = userService.getById(id).get();
+
+        if(user.getRole().toUpperCase().equals("SELLER")){
+            ((Seller)user).setApproved(true);
+
+        }
+        if(user.getRole().toUpperCase().equals(("BUYER"))){
+            ((Buyer)user).setApproved(true);
+
+        }
+        userService.save(user);
+    }
 
 }

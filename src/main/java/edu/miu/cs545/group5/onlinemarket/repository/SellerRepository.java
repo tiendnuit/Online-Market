@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
-      public List<Seller> findAllByApprovedFalse();
-      public List<Seller> findAllByApprovedTrue();
+      public List<Seller> findSellersByApprovedFalse();
+      public List<Seller> findSellersByApprovedTrue();
 
 
 
