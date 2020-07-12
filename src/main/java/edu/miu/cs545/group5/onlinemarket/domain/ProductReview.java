@@ -1,5 +1,7 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +12,12 @@ public class ProductReview implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @Nullable
+    private String description;
+
     @ManyToOne
     private Product product;
+
+
 
 }

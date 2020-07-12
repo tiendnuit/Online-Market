@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String[] lists = {"/",
+        String[] lists = {"/","/admin","/tab1","/tab2","/admin/unapproved","/favicon.ico",
                 "/css/**", "/js/**", "/images/**",
                 "/h2-console/**"};
 

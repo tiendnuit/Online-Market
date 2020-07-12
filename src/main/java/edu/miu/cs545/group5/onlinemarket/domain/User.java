@@ -1,5 +1,8 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import org.apache.coyote.http11.Constants;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -8,6 +11,10 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+        name = "user_type",
+        discriminatorType = DiscriminatorType.STRING
+)
 public abstract class User implements Serializable {
     @Id
     @GeneratedValue
@@ -27,6 +34,7 @@ public abstract class User implements Serializable {
     private String phone;
 
     @Past
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Size(min=6, message = "Password must be 6 characters")
@@ -37,6 +45,18 @@ public abstract class User implements Serializable {
     private Address address;
 
     public User() {
+    }
+    public User(  String firstName, String lastName, String email, String phone, LocalDate birthDate, String password, Address address) {
+
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email=email;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.password = password;
+        this.address = address;
+
     }
 
     public Long getId() {
@@ -93,5 +113,13 @@ public abstract class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

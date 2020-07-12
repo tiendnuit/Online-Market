@@ -1,9 +1,14 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class Address {
     @NotEmpty
@@ -17,4 +22,5 @@ public class Address {
 
     @Size(min = 5, max = 5, message = "Zip code must be 5 characters")
     private String zipCode;
+
 }
