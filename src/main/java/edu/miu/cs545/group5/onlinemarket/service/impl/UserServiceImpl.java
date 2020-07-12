@@ -4,6 +4,8 @@ import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,5 +52,13 @@ public class UserServiceImpl implements UserService {
     public void delete(String id) {
 
     }
+
+    @Override
+    public Optional<User> getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = ((UserDetails) principal).getUsername();
+        return userRepository.findByEmail(email);
+    }
+
 
 }
