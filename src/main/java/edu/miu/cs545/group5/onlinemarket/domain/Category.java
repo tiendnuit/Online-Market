@@ -1,5 +1,6 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Category implements Serializable {
 
     @Id
@@ -27,4 +29,9 @@ public class Category implements Serializable {
 
     @NotEmpty
     private String description;
+
+    public Category(@NotEmpty String categoryName, @NotEmpty String description) {
+        this.categoryName = categoryName;
+        this.description = description;
+    }
 }

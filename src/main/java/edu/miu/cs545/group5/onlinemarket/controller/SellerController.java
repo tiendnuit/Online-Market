@@ -5,6 +5,8 @@ import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,8 +47,8 @@ public class SellerController {
 
     @GetMapping("/sellerDashboard")
     public String getSellerDashBoard(Model model){
-        Seller seller = sellerService.findById((long) 1);
-          model.addAttribute("seller",seller);
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller",seller);
 
         return "sellerDashboard";
     }
