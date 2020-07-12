@@ -47,11 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         String[] lists = {
                 "/login", "/registration",
                 "/products", "/product-detail"
                 };
-
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(lists).permitAll()
@@ -87,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**",
-                        "/css/**", "/js/**", "/images/**",
+                        "/css/**", "/js/**", "/images/**", "/favicon.ico",
                         "/h2-console/**", "/swagger-ui.html/**");
     }
 

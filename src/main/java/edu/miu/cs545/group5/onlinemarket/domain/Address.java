@@ -2,6 +2,8 @@ package edu.miu.cs545.group5.onlinemarket.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -34,7 +33,7 @@ public class HomeController {
         } else if (hasRole(Constants.ROLE_BUYER)) {
             return "redirect:/buyer/home";
         } else if (hasRole(Constants.ROLE_ADMIN)) {
-            return "homepage";
+            return "redirect:/admin";
         }
 
         return "redirect:/login";

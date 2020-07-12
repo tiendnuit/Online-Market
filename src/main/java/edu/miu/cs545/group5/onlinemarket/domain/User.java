@@ -3,7 +3,6 @@ package edu.miu.cs545.group5.onlinemarket.domain;
 import edu.miu.cs545.group5.onlinemarket.config.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,9 +16,10 @@ import java.time.LocalDate;
 @Getter @Setter
 @AllArgsConstructor
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(
-//        name="user_role",
-//        discriminatorType=DiscriminatorType.STRING )
+@DiscriminatorColumn(
+        name = "user_type",
+        discriminatorType = DiscriminatorType.STRING
+)
 public class User implements Serializable {
     @Id
     @GeneratedValue
@@ -107,5 +107,13 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
