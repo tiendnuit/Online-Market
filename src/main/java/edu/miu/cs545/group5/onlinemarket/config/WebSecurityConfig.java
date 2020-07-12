@@ -12,8 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String[] lists = {"/","/seller/addSeller",
-                "/css/**", "/js/**", "/images/**",
+        String[] lists = {"/","/seller/addSeller","/seller/sellerForm","/product/productAddForm",
+                 "/product/addProduct","/category/addCategory","/category/categoryInputForm",
+                "/css/**", "/js/**", "/images/**","/font-awsome/**","/jquery/**",
                 "/h2-console/**"};
 
         http.csrf().disable()

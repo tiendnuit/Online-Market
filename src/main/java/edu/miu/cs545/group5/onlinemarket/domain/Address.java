@@ -1,10 +1,17 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Embeddable
+//@NoArgsConstructor
+@Getter
+@Setter
 public class Address {
     @NotEmpty
     private String street;

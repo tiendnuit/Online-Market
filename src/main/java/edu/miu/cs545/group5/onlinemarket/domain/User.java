@@ -1,5 +1,7 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -8,7 +10,11 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public abstract class User implements Serializable {
+@DiscriminatorColumn(
+        name="account_type",
+        discriminatorType=DiscriminatorType.STRING
+)
+public  class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,6 +32,8 @@ public abstract class User implements Serializable {
     @Pattern(regexp="\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX")
     private String phone;
 
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past
     private LocalDate birthDate;
 
@@ -93,5 +101,13 @@ public abstract class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
