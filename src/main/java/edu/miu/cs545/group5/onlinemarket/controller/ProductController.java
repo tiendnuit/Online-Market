@@ -3,6 +3,7 @@ package edu.miu.cs545.group5.onlinemarket.controller;
 import edu.miu.cs545.group5.onlinemarket.domain.Product;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.domain.User;
+import edu.miu.cs545.group5.onlinemarket.exception.UploadFileException;
 import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
 import edu.miu.cs545.group5.onlinemarket.service.ProductService;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
@@ -29,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -64,40 +66,32 @@ public class ProductController {
         }
         product.setSeller((Seller) user);
         //String uploadDir = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"uploadImage";
-
-        MultipartFile multipartFile = product.getMultipartFile();
-
-        // normalize the file path
-        //String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-
-       /* // save the file on the local file system
-        try {
-            Path path = Paths.get(UPLOADED_FOLDER + fileName);
-            //Path path = Paths.get(uploadDir + fileName);
-            Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        /*if(multipartFile != null){
-            product.setImageName(multipartFile.getOriginalFilename());
-            Path copyLocation = Paths
-                    .get(uploadDir + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+        String  fileName = UUID.randomUUID().toString();
+        MultipartFile productImage = product.getMultipartFile();
+        if (productImage != null && !productImage.isEmpty()) {
             try {
-                Files.copy(multipartFile.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
+                ClassLoader classLoader = getClass().getClassLoader();
+                String rootDirectory = classLoader.getResource(".").getFile();
+                //System.out.println("===> " + rootDirectory + "static/images/" + UUID.randomUUID().toString() + ".png");
+                File newFile = new File(rootDirectory + "static/images/" + fileName + ".png");//new File(rootDirectory + "/" + student.getId() + ".png");
+                //System.out.println("===> " + newFile.getAbsoluteFile());
+                productImage.transferTo(newFile);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                //throw new RuntimeException("Student Image saving failed", e);
+                throw new UploadFileException("Student Image saving failed");
             }
-        }*/
-        if(multipartFile != null){
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        }
+
+        if(productImage != null){
+            //String fileName = StringUtils.cleanPath(productImage.getOriginalFilename());
             product.setImageName(fileName);
-            product.setFileType(multipartFile.getContentType());
+            /*product.setFileType(productImage.getContentType());
             try {
-                product.setData(multipartFile.getBytes());
+                product.setData(productImage.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
             productService.saveProduct(product);
