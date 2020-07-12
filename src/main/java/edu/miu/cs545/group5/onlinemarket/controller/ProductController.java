@@ -132,4 +132,25 @@ public class ProductController {
        model.addAttribute("productById", productService.findProductById(productId));
         return "productDetails";
     }
+
+    @DeleteMapping("/deleteProduct/{productId}")
+    public String deleteProductById(@PathVariable("productId")Long productId){
+        Product product = productService.findProductById(productId);
+        if(product != null){
+            productService.deleteProductById(productId);
+        }
+        return "manageProduct";
+    }
+
+    @GetMapping("/editProduct/{productId}")
+    public String editProductById(@PathVariable("productId")Long productId, Model model){
+        model.addAttribute("productEdit", productService.findProductById(productId));
+        return "editProduct";
+    }
+
+    @PostMapping("/updateProduct")
+    public String updateProductBy(@ModelAttribute("product")Product product){
+        productService.saveProduct(product);
+        return "manageProduct";
+    }
 }

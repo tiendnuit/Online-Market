@@ -9,4 +9,5 @@ public interface ProductService {
     public Product saveProduct(Product product);
     public Page<Product> getPaginatedProduct(Pageable pageable);
     public Product findProductById(Long id);
+    public void deleteProductById(Long id);
 }

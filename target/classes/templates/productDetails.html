@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="header.html :: headerFile">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product Details</title>
 </head>
 <body>
-
+ <div th:insert="dashboardHeader.html :: dashboardHeaderBar"></div>
+ <div class="main-container">
+     <div class="page-header">
+         <h3>Seller Dashboard <small>Welcome back <span class="text-primary">Maria Fällström</span></small></h3>
+         <ol class="breadcrumb">
+             <li><a href="index.php">Home</a></li>
+         </ol>
+     </div>
+     <div id="global" class="container">
+         <fieldset>
+             <h3>Product Details</h3>
+             <div th:if="${productById}">
+               <p>
+                   Name : <span th:text="${productById.name}"/>
+               </p>
+               <p>
+                   Price : <span th:text="${productById.price}"/>
+               </p>
+                 <p>
+                     Category : <span th:text="${productById.category.categoryName}"/>
+                 </p>
+                 <p>
+                     Description : <span th:text="${productById.description}"/>
+                 </p>
+                 <p>
+                     <img th:src="@{/images/{image}(image=${productById.imageName})}">
+                 </p>
+             </div>
+         </fieldset>
+     </div>
+ </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </html>
