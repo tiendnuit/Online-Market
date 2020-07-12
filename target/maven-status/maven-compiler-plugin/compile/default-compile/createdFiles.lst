@@ -33,6 +33,7 @@ edu\miu\cs545\group5\onlinemarket\domain\dto\ProductResponse.class
 edu\miu\cs545\group5\onlinemarket\service\impl\BuyerServiceImpl.class
 edu\miu\cs545\group5\onlinemarket\controller\ProductController.class
 edu\miu\cs545\group5\onlinemarket\domain\Address.class
+edu\miu\cs545\group5\onlinemarket\exception\UploadFileException.class
 edu\miu\cs545\group5\onlinemarket\domain\Seller.class
 edu\miu\cs545\group5\onlinemarket\config\WebSecurityConfig.class
 edu\miu\cs545\group5\onlinemarket\OnlineMarketApplication.class

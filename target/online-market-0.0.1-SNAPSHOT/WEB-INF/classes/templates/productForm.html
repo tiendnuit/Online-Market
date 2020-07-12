@@ -4,6 +4,16 @@
     <title>Add User Form</title>
 </head>
 <body>
+<div th:insert="dashboardHeader.html :: dashboardHeaderBar"></div>
+<div class="main-container">    <!-- START: Main Container -->
+
+    <div class="page-header">
+        <h3>Seller Dashboard <small>Welcome back <span class="text-primary">Maria Fällström</span></small></h3>
+        <ol class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+        </ol>
+    </div>
+
 <div id="global" class="container">
     <form th:action="@{/product/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
         <fieldset>
@@ -47,6 +57,7 @@
             </div>
         </fieldset>
     </form>
+</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

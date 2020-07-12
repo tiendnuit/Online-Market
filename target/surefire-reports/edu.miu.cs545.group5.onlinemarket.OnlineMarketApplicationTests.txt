@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.miu.cs545.group5.onlinemarket.OnlineMarketApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.72 s - in edu.miu.cs545.group5.onlinemarket.OnlineMarketApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.995 s - in edu.miu.cs545.group5.onlinemarket.OnlineMarketApplicationTests

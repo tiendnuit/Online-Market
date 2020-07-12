@@ -30,7 +30,7 @@ legend {
     padding: 20px;
 }
 #global{
-    padding: 120px;
+    padding: 20px;
 }
 .buttun-style{
     margin: 30px;
@@ -45,7 +45,9 @@ select{
     color: green;
 }
 
-
+.page-header{
+    padding-top: 10px;
+}
 /**
 
  */
@@ -136,4 +138,14 @@ select{
 }
 .side-nav-sm:not(.sidenav-active) .slimScrollDiv,.side-nav-sm:not(.sidenav-active) .sidenav-inner {
     overflow: visible !important
+}
+
+.side-navigation-wrap {
+    background-color: #363b5b;
+}
+.header-top .navbar-header {
+    background-color: #363A5C;
+    width: 230px;
+    height: 60px;
+    margin: -16px;
 }
