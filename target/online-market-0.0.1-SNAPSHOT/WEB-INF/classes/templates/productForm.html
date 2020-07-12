@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<head th:insert="header.html :: headerFile">
     <title>Add User Form</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-    <link rel="stylesheet"  th:href="@{/css/font-awesome.css}"/>
 </head>
 <body>
 <div id="global" class="container">
     <form th:action="@{/product/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
         <fieldset>
             <h2> Product Registration Form</h2>
+            <div th:if="${msg}"><h4 class="success-msg">Successfully Finish Product Registration</h4></div>
             <div class="container" id="div-style">
                 <div class="form-group">
                     <label th:text="#{product.name}" for="productName">Name:</label>

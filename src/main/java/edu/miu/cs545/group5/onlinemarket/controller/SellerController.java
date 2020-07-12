@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 @Controller
@@ -36,5 +37,23 @@ public class SellerController {
         model.addAttribute("seller", seller);
         redirectAttributes.addFlashAttribute("msg", "Success");
         return "redirect:/seller/sellerForm";
+    }
+
+    @GetMapping("/sellerDashboard")
+    public String getSellerDashBoard(Model model){
+        Seller seller = sellerService.findById((long) 1);
+          model.addAttribute("seller",seller);
+
+        return "sellerDashboard";
+    }
+
+    @GetMapping("/dashboard")
+    public String manageSeller(Model model){
+        if(sellerService.findById((long) 1) != null)
+            model.addAttribute("seller",sellerService.findById((long) 1));
+        else {
+            model.addAttribute("seller", new Seller());
+        }
+        return "dashboardHeader";
     }
 }

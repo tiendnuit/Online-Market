@@ -7,15 +7,15 @@ import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
 import edu.miu.cs545.group5.onlinemarket.service.ProductService;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +28,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/product")
@@ -101,5 +104,38 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("msg", "Success");
             return "redirect:/product/productAddForm";
 
+    }
+
+    @GetMapping("/dashboard")
+    public String manageSeller(Model model){
+        model.addAttribute("seller",sellerService.findById((long) 1));
+
+        return "dashboardHeader";
+    }
+
+    @RequestMapping("/productList/{page}")
+    public ModelAndView listProductPageByPage(@PathVariable("page")int page){
+        ModelAndView modelAndView = new ModelAndView("manageProduct");
+        PageRequest pageable = PageRequest.of(page - 1, 15);
+        Page<Product> productPage = productService.getPaginatedProduct(pageable);
+        int totalPages = productPage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            modelAndView.addObject("pageNumbers", pageNumbers);
+        }
+        //Only login Seller do this
+        Seller seller = sellerService.findById((long) 1);
+        modelAndView.addObject("seller",seller);
+
+
+        modelAndView.addObject("activeProductList", true);
+        modelAndView.addObject("productList", productPage.getContent());
+        return modelAndView;
+    }
+
+    @RequestMapping("/productDetails/{productId}")
+    public String editProduct(@PathVariable("productId")Long productId, Model model){
+       model.addAttribute("productById", productService.findProductById(productId));
+        return "productDetails";
     }
 }
