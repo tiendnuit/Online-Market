@@ -1,0 +1,43 @@
+/**
+ main css
+ */
+
+body{
+    background-color: #f9f9f9;
+}
+input, textarea{
+    /*margin-left: 3em;
+    width: 40%;*/
+    margin-top: -35px;
+    margin-left: 8.5em;
+    width: 50% !important;
+}
+fieldset {
+    border: solid 2px gray !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+    /*background-color: #f9f9f9;*/
+}
+
+legend {
+    width: auto !important;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+#div-style{
+    margin-left: 50px;
+    padding: 20px;
+}
+#global{
+    padding: 120px;
+}
+.buttun-style{
+    margin: 30px;
+    float: right;
+    width: 30% !important;
+}
+select{
+    width: 50% !important;
+    margin-left: 60px;
+}

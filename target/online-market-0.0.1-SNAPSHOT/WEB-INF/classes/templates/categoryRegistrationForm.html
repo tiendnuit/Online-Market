@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Registration Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet"  th:href="@{/css/font-awesome.css}"/>
+</head>
+<body>
+<div id="global" class="container">
+    <form th:action="@{/category/addCategory}" th:object="${category}" method="post">
+        <fieldset>
+            <h2> Category Registration Form</h2>
+            <div th:if="${msg}">Successfully Register Category</div>
+            <div class="container" id="div-style">
+                <div class="form-group">
+                    <label th:text="#{category.name}" for="categoryName">Category Name:</label>
+                    <input type="text" id="categoryName" th:field="*{categoryName}" name="cNameInput" class="form-control">
+                    <span th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}" style="color: red">Name Error</span>
+                </div>
+                <div class="form-group">
+                    <label th:text="#{product.description}" for="description">Description:</label>
+                    <textarea type="text" id="description" th:field="*{description}" name="categoryDescriptionInput" class="form-control"/>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Name Error</span>
+                </div>
+                <input class="buttun-style btn btn-primary" type="submit" id="sellerSubmitBtn" value="Add Category">
+                <input type="reset" class="buttun-style btn btn-primary" value="Reset">
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</body>
+</html>
