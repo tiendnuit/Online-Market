@@ -41,8 +41,8 @@ public class ShoppingCartController {
     public void addToCart(@RequestBody ShoppingCartLine shoppingCartLine) {
         Product product = productService.findProductById(shoppingCartLine.getProduct().getId());
 
-        User user = userService.getLoggedUser().get();
-        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
+        Buyer user = (Buyer)userService.getLoggedUser().get();
+        ShoppingCart shoppingCart = user.getShoppingCart();
         List<ShoppingCartLine> shoppingCartLines = shoppingCart.getShoppingCartLines();
         for (ShoppingCartLine line : shoppingCartLines) {
             if (product.getId() == line.getProduct().getId()) {
@@ -86,5 +86,14 @@ public class ShoppingCartController {
                 shoppingCartService.saveShoppingCart(shoppingCart);
             }
         }
+    }
+
+    @GetMapping("/cart/items/count")
+    @ResponseBody
+    public int getCount() {
+        User user = userService.getLoggedUser().get();
+        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
+
+        return shoppingCart.getNumberOfProducts();
     }
 }

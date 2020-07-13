@@ -6,7 +6,7 @@
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Cart page</title>
 </head>
 <body>
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <div layout:fragment="content">
     <section class="my-5">
         <div class="container">
@@ -18,10 +18,10 @@
             </nav>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="alert alert-primary" role="alert" th:if="${#lists.isEmpty(session.cart.items)}">
+                    <div class="alert alert-primary" role="alert" th:if="${#lists.isEmpty(shoppingCart.shoppingCartLines)}">
                         Cart is Empty
                     </div>
-                    <div class="card" th:unless="${#lists.isEmpty(session.cart.items)}">
+                    <div class="card" th:unless="${#lists.isEmpty(shoppingCart.shoppingCartLines)}">
 
                         <div class="table-responsive">
 
@@ -35,13 +35,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="item : ${session.cart.items}">
+                                <tr th:each="item : ${shoppingCart.shoppingCartLines}">
                                     <td>
                                         <figure class="itemside align-items-center">
-                                            <div class="aside"><img th:src="@{/product-images/{pic}(pic=${item.product.image})}" class="img-sm"></div>
+                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-sm"></div>
                                             <figcaption class="info">
                                                 <a href="#" th:href="@{/product-detail(pid=${item.product.id})}" class="title text-dark" th:text="${item.product.name}">Camera Canon EOS M50 Kit</a>
-                                                <p class="text-muted small">SKU: [[${item.product.virtualSKU}]] <br> Seller: [[${item.product.seller.fullName}]]</p>
                                             </figcaption>
                                         </figure>
                                     </td>
@@ -51,13 +50,10 @@
                                     </td>
                                     <td>
                                         <div class="price-wrap">
-                                            <var class="price" >$[[${#numbers.formatDecimal(item.subTotal,1,2)}]]</var><br/>
-                                            <small class="text-muted"> $[[${#numbers.formatDecimal(item.product.actualPrice,1,2)}]]
-                                                <del class="text-danger" th:if="${item.product.discount>0}">$[[${item.product.price}]]</del> each </small>
+                                            <var class="price" >$[[${#numbers.formatDecimal(item.totalPrice,1,2)}]]</var>
                                         </div>
                                     </td>
                                     <td class="text-right d-none d-md-block">
-<!--                                        <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>-->
                                         <a class="btn btn-sm btn-outline-danger" href="#"
                                            th:onclick="|removeItemFromCart(${item.product.id})|"> <i class="fa fa-trash"></i></a>
                                     </td>
@@ -77,6 +73,10 @@
             </div>
         </div>
     </section>
+</div>
+
+<div>
+    <button onclick="addItemToCart(12,2);">Add to cart</button>
 </div>
 
 <div layout:fragment="optional">

@@ -23,7 +23,7 @@ public class ShoppingCart implements Serializable {
     @OneToOne(mappedBy="shoppingCart")
     private Buyer buyer;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ShoppingCartLine> shoppingCartLines = new ArrayList<>();
 
     @Transient

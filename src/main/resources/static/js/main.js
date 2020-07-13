@@ -1,5 +1,4 @@
 function addItemToCart(id, quantity, showCart = false) {
-    console.log(quantity);
     $.ajax ({
         url: '/cart/items',
         type: "POST",
@@ -33,7 +32,8 @@ function updateCartItemCount() {
         dataType: "json",
         contentType: "application/json",
         complete: function(responseData, status, xhttp){
-            $('#cart-item-count').text(responseData.responseJSON.count);
+            // $('#cart-item-count').text(responseData.responseJSON.count);
+            Console.log(responseData.responseJSON.count);
         }
     });
 }
