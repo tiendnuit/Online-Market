@@ -22,17 +22,32 @@ public class SellerServiceImpl implements SellerService {
         List<Seller> allSellersList = sellerRepository.findAll();
         return allSellersList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
     }
+    public List<Seller> findAllSeller(){
+        return sellerRepository.findAllSellers();
+    }
 
     @Override
-    public List<SellerResponse> getAllSellersNotApproved() {
-        List<Seller> unapprovedSellerList = sellerRepository.findAllByApprovedFalse();
-            return unapprovedSellerList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
+    public void approveSeller(Long id) {
+        Seller seller = sellerRepository.findById(id).get();
+        if(seller.isApproved()==false){
+            seller.setApproved(true);
+        }
+        else{
+            seller.setApproved(false);
+        }
+        sellerRepository.save(seller);
     }
-    @Override
-    public List<SellerResponse> getAllApprovedSellers(){
-        List<Seller> approvedSellersList = sellerRepository.findAllByApprovedTrue();
-        return approvedSellersList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
-    }
+
+//    @Override
+//    public List<SellerResponse> getAllSellersNotApproved() {
+//        List<Seller> unapprovedSellerList = sellerRepository.findSellersByApprovedFalse();
+//            return unapprovedSellerList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
+//    }
+//    @Override
+//    public List<SellerResponse> getAllApprovedSellers(){
+//        List<Seller> approvedSellersList = sellerRepository.findAllByApprovedTrue();
+//        return approvedSellersList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
+//    }
 
     @Override
     public Optional<Seller> getSellerById(Long id) {
@@ -49,3 +64,4 @@ public class SellerServiceImpl implements SellerService {
         return sellerRepository.getOne(id);
     }
 }
+

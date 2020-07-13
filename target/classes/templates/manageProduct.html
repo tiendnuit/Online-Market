@@ -12,29 +12,43 @@
     <div class="main-container">    <!-- START: Main Container -->
 
         <div class="page-header">
-            <h3>Seller Dashboard <small>Welcome back <span class="text-primary">Maria Fällström</span></small></h3>
+            <h3>Seller Dashboard <small>Welcome back <span class="text-primary" th:text="${seller.firstName}">Maria Fällström</span></small></h3>
             <ol class="breadcrumb">
-                <li><a href="index.php">Home</a></li>
+                <li><a th:href="@{/seller/sellerDashboard}">Home</a></li>
             </ol>
         </div>
         <div id="global" class="container">
+            <table>
+                <tr>
 
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary" title="Edit"><span class="fa fa-edit"/></a>
-                    <a href="#" class="btn btn-danger" title="Delete"><span class="fa fa-trash"/></a>
-                    <a href="#" class="btn btn-success" title="View"><span class="fa fa-eye"/></a>
-                </div>
-            </div>
+          <span th:each="product : ${productList}" clas="card">
+                  <td>
+            <span class="card" style="width: 18rem;">
+                <!--<img th:src="@{/images/b84bc0b0-dfc9-41c7-bdb8-b577c5ffed64.png}" class="image-style">-->
+                <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(product.getData())}" th:class="image-style"/>
+                <span class="card-body">
+                    <!--<h5 class="card-title">Card title</h5>-->
+                    <p class="p-margin">Model:  <span th:text="${{product.name}}"/>Name</p>
+                    <p class="p-margin">Price : <span th:text="${{product.price}}"/>PRICE</p>
+                    <p class="p-margin">Stock Qnt: <span th:text="${product.stock}"/>Stock</p>
+                    <p class="p-margin">Description : <span th:text="${{product.description}}"/>PENDING</p>
+                    <p class="p-margin">Category : <span th:text="${product.category.categoryName}"/></p>
+                    <a th:href="@{/seller/product/editProduct/{productId}(productId=${product.id})}" class="btn btn-primary" title="Edit"><span class="fa fa-edit"/></a>
+                    <a th:if="${product.stock} &gt; 0" th:href="@{/seller/product/deleteProduct/{productId}(productId=${product.id})}" class="btn btn-danger" title="Delete"><span class="fa fa-trash"/></a>
+                    <a th:href="@{/seller/product/productDetails/{productId}(productId=${product.id})}" class="btn btn-success" title="View"><span class="fa fa-eye"/></a>
+                </span>
+            </span>
+                  </td>
+          </span>
+                </tr>
+            </table>
 
-            <table id="link-list" class="table table-striped table-bordered" style="width:100%">
+           <!-- <table id="link-list" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Stock</th>
                     <th>Description</th>
                     <th>Category</th>
                     <th>Action</th>
@@ -43,21 +57,22 @@
                 <tbody>
                 <tr th:each="product : ${productList}">
                     <td th:text="${{product.name}}">Name</td>
-                    <td th:text="${{product.price}}"></td>
+                    <td th:text="${{product.price}}">PRICE</td>
+                    <td th:text="${product.stock}">Stock</td>
                     <td th:text="${{product.description}}">PENDING</td>
                     <td th:text="${product.category.categoryName}"></td>
-                    <td><a th:href="@{/product/productDetails/{productId}(productId=${product.id})}" title="Detail">
+                    <td><a th:href="@{/seller/product/productDetails/{productId}(productId=${product.id})}" title="Detail">
                            <span class="fa fa-search"></span></a>
-                        <a th:if="${product.stock} &gt; 0" th:href="@{/product/deleteProduct/{productId}(productId=${product.id})}" title="Delete">
+                        <a th:if="${product.stock} &gt; 0" th:href="@{/seller/product/deleteProduct/{productId}(productId=${product.id})}" title="Delete">
                             <span class="fa fa-trash"></span>
                         </a>
-                        <a th:href="@{/product/editProduct/{productId}(productId=${product.id})}" title="Edit product">
+                        <a th:href="@{/seller/product/editProduct/{productId}(productId=${product.id})}" title="Edit product">
                             <span class="fa fa-edit"></span>
                         </a>
                     </td>
                 </tr>
                 </tbody>
-            </table>
+            </table>-->
 
             <div class="row" th:fragment="pagination">
                 <div class="col-md-2"></div>
@@ -65,7 +80,7 @@
                     <nav aria-label="Pagination">
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                                <a class="page-link" th:href="@{|/product/productList/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                                <a class="page-link" th:href="@{|/seller/product/productList/${pageNumber}|}" th:text="${pageNumber}">1</a>
                             </li>
                         </ul>
                     </nav>

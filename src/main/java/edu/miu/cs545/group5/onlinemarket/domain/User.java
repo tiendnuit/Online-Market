@@ -52,7 +52,7 @@ public class User implements Serializable {
     protected String role;
 
     @Column(name = "active")
-    private int active;
+    private int active = 0;
 
     public User() {
         role = Constants.ROLE_ADMIN;

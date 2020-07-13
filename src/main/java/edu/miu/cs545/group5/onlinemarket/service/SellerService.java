@@ -13,8 +13,10 @@ import org.springframework.data.domain.Pageable;
 public interface SellerService {
 
     List<SellerResponse> getAllSellers();
-    public List<SellerResponse> getAllSellersNotApproved();
-    public List<SellerResponse> getAllApprovedSellers();
     public Optional<Seller> getSellerById(Long id);
     public Seller findById(Long id);
+    public List<Seller> findAllSeller();
+    public void approveSeller(Long id);
+
+
 }

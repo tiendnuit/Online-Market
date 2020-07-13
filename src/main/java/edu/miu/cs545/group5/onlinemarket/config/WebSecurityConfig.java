@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/home", true)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout()
@@ -88,8 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**",
-                        "/css/**", "/js/**", "/images/**", "/favicon.ico",
-                        "/h2-console/**", "/swagger-ui.html/**");
+                        "/css/**", "/js/**", "/images/**",
+                        "/h2-console/**", "/jquery/**");
     }
 
     @Bean

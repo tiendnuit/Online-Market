@@ -4,6 +4,8 @@ import edu.miu.cs545.group5.onlinemarket.config.Constants;
 import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.domain.User;
+import edu.miu.cs545.group5.onlinemarket.repository.BuyerRepository;
+import edu.miu.cs545.group5.onlinemarket.repository.SellerRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SellerRepository sellerRepository;
+
+    @Autowired
+    private BuyerRepository buyerRepository;
 
     @Override
     public List<User> getAll() {
@@ -69,9 +77,71 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void approveBuyer(Long id) {
+        //not implemented
+    }
+
+    @Override
+    public List<User> findAllUserSellersAndBuyers() {
+        return userRepository.findAllUserSellersAndBuyers();
+    }
+
+
+
+
+    public void enableUser(Long id){
+            User user = userRepository.findById(id).get();
+
+            if(user.getActive()==1){
+                user.setActive(0);
+            }
+            else {
+                user.setActive(1);
+            }
+        Seller seller = (Seller) user;
+        seller.setApproved(true);
+        userRepository.save(seller);
+
+    }
+
+    @Override
+    public List<Seller> findAllSellers() {
+        return userRepository.findAllSellers();
+    }
+
+
+    @Override
+    public void disAbleUser(Long id) {
+
+    }
+    @Override
+    public void approveSeller(Long id) {
+        User user = userRepository.findById(id).get();
+        if(user.getRole().equals("SELLER")){
+          Seller  seller = (Seller) user;
+            if(!seller.isApproved()){
+                seller.setApproved(true); }
+            else{ seller.setApproved(false); }
+            userRepository.save(seller);
+        }
+    }
+
+
+    @Override
+    public List<? extends User> getNotApprovedUsers() {
+        return sellerRepository.findSellersByApprovedFalse();
+    }
+
+    @Override
     public void delete(String id) {
 
     }
+
+    @Override
+    public List<Seller> getAllSellers() {
+        return userRepository.findAllSellers();
+    }
+
 
     @Override
     public Optional<User> getLoggedUser() {
@@ -83,6 +153,8 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+
 
 
 }

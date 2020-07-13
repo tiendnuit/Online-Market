@@ -16,6 +16,7 @@ import java.util.List;
 @DiscriminatorValue("buyer")
 public class Buyer extends User {
     private int point = 0;
+    private boolean approved = false;
 
     @ManyToMany
     private List<Seller> followings = new ArrayList<>();
@@ -63,5 +64,13 @@ public class Buyer extends User {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

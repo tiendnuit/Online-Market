@@ -49,17 +49,23 @@ public class SellerController {
     public String getSellerDashBoard(Model model){
         Seller seller = (Seller) userService.getLoggedUser().get();
         model.addAttribute("seller",seller);
+        model.addAttribute("pId", userService.getLoggedUser().get().getId());
 
         return "sellerDashboard";
     }
 
     @GetMapping("/dashboard")
     public String manageSeller(Model model){
-        if(sellerService.findById((long) 1) != null)
+        /*if(sellerService.findById((long) 1) != null)
             model.addAttribute("seller",sellerService.findById((long) 1));
         else {
             model.addAttribute("seller", new Seller());
-        }
+            model.addAttribute("pId", userService.getLoggedUser().get().getId());
+        }*/
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        model.addAttribute("pId", userService.getLoggedUser().get().getId());
+
         return "dashboardHeader";
     }
 }

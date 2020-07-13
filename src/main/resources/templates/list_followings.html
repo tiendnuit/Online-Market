@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,6 +20,7 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email Address</th>
         <th scope="col">Phone Number</th>
+        <th scope="col">Followings</th>
     </tr>
     </thead>
     <tbody>
@@ -28,8 +31,16 @@
         <td th:text="${seller.lastName}">Otto</td>
         <td th:text="${seller.email}" >Otto@gmail.com</td>
         <td th:text="${seller.phone}">164-0987-124</td>
+        <td class="text-right d-none d-md-block">
+            <a class="btn btn-sm btn-outline-danger btn-unfollow" href="#" th:id="${seller.id}"> Unfollow</a>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<div layout:fragment="optional">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
+</div>
 </body>
 </html>
