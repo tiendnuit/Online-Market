@@ -4,9 +4,12 @@
       layout:decorate="~{layout}">
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Cart page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <div layout:fragment="content">
     <section class="my-5">
         <div class="container">
@@ -38,7 +41,7 @@
                                 <tr th:each="item : ${shoppingCart.shoppingCartLines}">
                                     <td>
                                         <figure class="itemside align-items-center">
-                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-sm"></div>
+                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-thumbnail"></div>
                                             <figcaption class="info">
                                                 <a href="#" th:href="@{/product-detail(pid=${item.product.id})}" class="title text-dark" th:text="${item.product.name}">Camera Canon EOS M50 Kit</a>
                                             </figcaption>
@@ -64,7 +67,7 @@
                         </div>
 
                         <div class="card-body border-top">
-                            <a th:href="@{/checkout-shipping}" class="btn btn-outline-primary">Check out</a>
+                            <a th:href="@{/checkout}" class="btn btn-outline-primary">Check out</a>
                         </div>
 
                     </div>
@@ -73,10 +76,6 @@
             </div>
         </div>
     </section>
-</div>
-
-<div>
-    <button onclick="addItemToCart(12,2);">Add to cart</button>
 </div>
 
 <div layout:fragment="optional">

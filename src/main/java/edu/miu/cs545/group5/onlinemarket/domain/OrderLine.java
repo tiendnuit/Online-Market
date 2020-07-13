@@ -24,6 +24,11 @@ public class OrderLine implements Serializable {
 
     private Integer quantity;
 
+    public OrderLine(Product product, Integer quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     @Transient
     public Double getTotalPrice() {
         return getProduct().getPrice() * getQuantity();

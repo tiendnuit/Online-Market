@@ -50,7 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] lists = {
                 "/login", "/registration",
                 "/products", "/product-detail",
-                "/cart", "/cart/**"
+                "/cart", "/cart/**",
+                "/checkout", "/checkout/**"
                 };
         http.csrf().disable()
                 .authorizeRequests()
