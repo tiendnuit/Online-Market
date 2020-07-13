@@ -20,10 +20,10 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(mappedBy="shoppingCart")
+    @OneToOne(mappedBy = "shoppingCart")
     private Buyer buyer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCartLine> shoppingCartLines = new ArrayList<>();
 
     @Transient

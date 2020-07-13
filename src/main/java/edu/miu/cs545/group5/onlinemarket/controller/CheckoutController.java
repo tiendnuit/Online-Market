@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/buyer")
 public class CheckoutController {
     @Autowired
     private UserService userService;
@@ -40,18 +41,22 @@ public class CheckoutController {
 
     @PostMapping("/checkout")
     public String placeOrder(@ModelAttribute("order") @Valid Order order, BindingResult br, Model model) {
-        if (br.hasErrors()) {
-            return "checkout";
-        }
-
         User user = userService.getLoggedUser().get();
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
+
+        if (br.hasErrors()) {
+            model.addAttribute("shoppingCart", shoppingCart);
+            return "checkout";
+        }
 
         order.setBuyer((Buyer) user);
         order.setSeller(getSellerFromShoppingCart(shoppingCart));
         order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines()));
 
         orderService.save(order);
+
+        shoppingCart.getShoppingCartLines().clear();
+        shoppingCartService.saveShoppingCart(shoppingCart);
 
         return "complete";
     }
