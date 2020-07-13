@@ -13,6 +13,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
     @Override
+    public ShoppingCart saveShoppingCart(ShoppingCart shoppingCart) {
+        return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
     public ShoppingCart getShoppingCartByBuyerId(Long id) {
         return shoppingCartRepository.findByBuyerId(id).get();
     }

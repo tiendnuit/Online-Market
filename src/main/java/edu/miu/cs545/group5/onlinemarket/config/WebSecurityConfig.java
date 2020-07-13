@@ -49,7 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String[] lists = {
                 "/login", "/registration",
-                "/products", "/product-detail"
+                "/products", "/product-detail",
+                "/cart", "/cart/**"
                 };
         http.csrf().disable()
                 .authorizeRequests()
