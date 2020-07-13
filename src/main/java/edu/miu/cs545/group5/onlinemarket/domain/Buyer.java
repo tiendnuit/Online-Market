@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -25,7 +27,20 @@ public class Buyer extends User {
     public Buyer() {
         this.role = Constants.ROLE_BUYER;
     }
-    
+
+    public Buyer(@NotBlank String firstName,
+                 @NotBlank String lastName,
+                 @NotBlank @Email String email,
+                 @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX") String phone,
+                 @Past LocalDate birthDate, @Size(min = 6, message = "Password must be 6 characters") String password,
+                 @Valid Address address, String role,
+                 int active, int point, boolean follow) {
+        super(firstName, lastName, email, phone, birthDate, password, address, role, active);
+        this.point = point;
+        this.follow = follow;
+        this.shoppingCart = shoppingCart;
+    }
+
     public int getPoint() {
         return point;
     }

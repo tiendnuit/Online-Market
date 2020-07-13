@@ -1,5 +1,7 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -17,18 +19,31 @@ public class Product implements Serializable {
     @NotNull
     private Double price;
 
-    @NotEmpty
+    @NotNull
     private Integer stock;
 
     @NotBlank
     private String description;
 
-    @NotBlank
-    private String image;
+
+    private String imageName;
+
+    /*private String fileType;
+
+    @Lob
+    private byte[] data;*/
+
+    @Transient
+    private MultipartFile multipartFile;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne
     @JoinColumn
-    @NotNull
+    //@NotNull
     private Seller seller;
 
     @OneToMany(mappedBy = "product")
@@ -77,12 +92,12 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Seller getSeller() {
@@ -100,4 +115,36 @@ public class Product implements Serializable {
     public void setReviews(List<ProductReview> reviews) {
         this.reviews = reviews;
     }
+
+    public MultipartFile getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    /*public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }*/
 }

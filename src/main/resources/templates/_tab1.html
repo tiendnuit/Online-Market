@@ -23,15 +23,15 @@
     </thead>
     <tbody>
 
-    <tr th:each="seller, iter: ${unapprovedSellers}">
+    <tr th:each="users, iter: ${users}">
         <th scope="row" th:text="${iter.index + 1}" >1</th>
-        <td th:text="${seller.firstName}">Mark</td>
-        <td th:text="${seller.lastName}">Otto</td>
-        <td th:text="${seller.email}" >Otto@gmail.com</td>
-        <td th:text="${seller.phone}">164-0987-124</td>
+        <td th:text="${users.firstName}">Mark</td>
+        <td th:text="${users.lastName}">Otto</td>
+        <td th:text="${users.email}" >Otto@gmail.com</td>
+        <td th:text="${users.phone}">164-0987-124</td>
         <td style="text-indent: 10px">
 <!--            <label th:for="${#ids.next('covered')}" th:text="#{seller.approved}">Covered</label>-->
-            <input type="checkbox"  name="${seller.id}" th:checked="${seller.approved}" />
+            <input type="checkbox"  name="${seller.id}" th:checked="${users.approved}" />
         </td>
 
     </tr>

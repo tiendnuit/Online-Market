@@ -10,7 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Embeddable
-@Getter @Setter
+@Getter
+@Setter
 public class Address {
     @NotEmpty
     private String street;

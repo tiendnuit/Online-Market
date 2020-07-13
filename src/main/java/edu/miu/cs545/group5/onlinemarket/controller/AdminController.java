@@ -38,27 +38,13 @@ public class AdminController {
         } else{ return "_tab2";}
     }
 
-    @ModelAttribute("unapprovedSellers")
-    List<SellerResponse> unapprovedSellers(Model model) {
-        return      Arrays.asList(
-                new SellerResponse("Aron", "Teferi", "Aron@yahoo.com", "612335345",   false),
-                new SellerResponse("Samuel", "Arefayne", "SelamAron@yahoo.com", "87423535345",   true),
-                new SellerResponse("James", "Selam", "Kianemariam@yahoo.com", "12335345",   false),
-                new SellerResponse("Aron", "Teferi", "TeferiAron@yahoo.com", "1265423",   true)
-        );
-    }
-
-    @ModelAttribute("approvedUsers")
-    public List<? extends User> activeUsers(Model model){
-        return userService.getAllApprovedUsers();
-    }
 
     @ModelAttribute("notApprovedUsers")
     public List<? extends User> notActiveUsers(Model model) {
         return userService.getNotApprovedUsers();
 
     }
-    public void updateUser(Long id){
+         public void updateUser(Long id){
 
         User user = userService.getById(id).get();
 
@@ -71,6 +57,18 @@ public class AdminController {
 
         }
         userService.save(user);
+    }
+
+        @ModelAttribute("/enableUser")
+        public void enableUser(Long id){
+            userService.enableUser(id);
+        }
+        @ModelAttribute("users")
+        @RequestMapping("/allUsers")
+        public String getAllUsersExceptAdmin(Model model){
+            List<User> users = userService.findAllUserSellersAndBuyers();
+            model.addAttribute("users", users);
+            return "_tab1";
     }
 
 }

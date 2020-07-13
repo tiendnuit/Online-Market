@@ -13,9 +13,13 @@ public interface UserService {
     Optional<User> getByEmail(String email);
     void update(User user);
     void save(User user);
-    List<? extends User> getAllApprovedUsers();
+    List<User> findAllUserSellersAndBuyers();
+    public void enableUser(Long id);
+
     List<? extends User> getNotApprovedUsers();
 
 
     void delete(String id);
+
+    Optional<User> getLoggedUser();
 }

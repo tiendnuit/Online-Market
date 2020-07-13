@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @Controller
 public class HomeController {
-
     @Autowired
     EmailService emailService;
 
@@ -29,7 +28,7 @@ public class HomeController {
     @GetMapping(value = {"/","/home"})
     public String home() {
         if (hasRole(Constants.ROLE_SELLER)) {
-            return "redirect:/seller/home";
+            return "redirect:/seller/sellerDashboard";
         } else if (hasRole(Constants.ROLE_BUYER)) {
             return "redirect:/buyer/home";
         } else if (hasRole(Constants.ROLE_ADMIN)) {

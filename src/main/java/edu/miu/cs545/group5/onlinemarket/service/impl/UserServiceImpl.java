@@ -1,18 +1,17 @@
 package edu.miu.cs545.group5.onlinemarket.service.impl;
 
-import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
-import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.repository.BuyerRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.SellerRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +44,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-
-
     @Override
     public void update(User user) {
 
@@ -60,33 +57,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllUserSellersAndBuyers() {
+        return userRepository.findAllUserSellersAndBuyers();
+    }
+
+
+
+    public void enableUser(Long id){
+            User user = userRepository.findById(id).get();
+            user.setActive(1);
+            userRepository.save(user);
+
+
+    }
+    @Override
+    public List<? extends User> getNotApprovedUsers() {
+        return sellerRepository.findSellersByApprovedFalse();
+    }
+
+    @Override
     public void delete(String id) {
 
     }
 
     @Override
-    public List<? extends User> getAllApprovedUsers(){
-
-        List allApprovedUsers = new ArrayList<>();
-        List<Seller> approvedSellers = sellerRepository.findSellersByApprovedTrue();
-        List<Buyer> approvedBuyers = buyerRepository.findBuyersByApprovedTrue();
-
-        allApprovedUsers.add(approvedBuyers);
-        allApprovedUsers.add(approvedSellers);
-
-        return allApprovedUsers;
-
-    }
-
-    @Override
-    public List<? extends User> getNotApprovedUsers() {
-        List NotApprovedUsers = new ArrayList<>();
-        List<Seller> notApprovedSellers = sellerRepository.findSellersByApprovedFalse();
-        List<Buyer> notApprovedBuyers = buyerRepository.findBuyersByApprovedFalse();
-
-        NotApprovedUsers.add(notApprovedSellers);
-        NotApprovedUsers.add(notApprovedBuyers);
-        return NotApprovedUsers;
+    public Optional<User> getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = ((UserDetails) principal).getUsername();
+        return userRepository.findByEmail(email);
     }
 
 
