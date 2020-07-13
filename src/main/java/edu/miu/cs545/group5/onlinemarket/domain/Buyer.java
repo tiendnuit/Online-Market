@@ -4,10 +4,7 @@ import edu.miu.cs545.group5.onlinemarket.config.Constants;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -19,7 +16,7 @@ public class Buyer extends User {
     private int point = 0;
     private boolean follow = false;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private ShoppingCart shoppingCart;
 
 
