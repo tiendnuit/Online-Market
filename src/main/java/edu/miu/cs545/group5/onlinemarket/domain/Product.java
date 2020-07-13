@@ -29,10 +29,10 @@ public class Product implements Serializable {
 
     private String imageName;
 
-    /*private String fileType;
+    private String fileType;
 
     @Lob
-    private byte[] data;*/
+    private byte[] data;
 
     @Transient
     private MultipartFile multipartFile;
@@ -150,7 +150,7 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    /*public String getFileType() {
+    public String getFileType() {
         return fileType;
     }
 
@@ -164,5 +164,5 @@ public class Product implements Serializable {
 
     public void setData(byte[] data) {
         this.data = data;
-    }*/
+    }
 }

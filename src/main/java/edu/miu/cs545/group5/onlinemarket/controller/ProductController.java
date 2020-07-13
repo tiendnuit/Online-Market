@@ -1,5 +1,7 @@
 package edu.miu.cs545.group5.onlinemarket.controller;
 
+import edu.miu.cs545.group5.onlinemarket.config.CustomMultipartFile;
+import edu.miu.cs545.group5.onlinemarket.config.ImageUtil;
 import edu.miu.cs545.group5.onlinemarket.domain.Product;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.domain.User;
@@ -7,6 +9,7 @@ import edu.miu.cs545.group5.onlinemarket.exception.UploadFileException;
 import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
 import edu.miu.cs545.group5.onlinemarket.service.ProductService;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
+import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,28 +50,45 @@ public class ProductController {
     @Autowired
     private SellerService sellerService;
 
+    @Autowired
+    private UserService userService;
+
     private final String UPLOAD_DIR = "./static/uploadImage";
     private static String UPLOADED_FOLDER = System.getProperty("java.io.tmpdir");
 
 
     @GetMapping("/productAddForm")
     public String getProductForm(@ModelAttribute("product")Product product, Model model){
+
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
         model.addAttribute("categories", categoryService.findAllCategory());
         return "productForm";
     }
     @PostMapping("/addProduct")
     public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        User user = new Seller();
-        user.setId((long) 1);
+        Seller seller = (Seller) userService.getLoggedUser().get();
 
         if (bindingResult.hasErrors()) {
             return "productForm";
         }
-        product.setSeller((Seller) user);
+        product.setSeller(seller);
         //String uploadDir = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"uploadImage";
         String  fileName = UUID.randomUUID().toString();
         MultipartFile productImage = product.getMultipartFile();
-        if (productImage != null && !productImage.isEmpty()) {
+
+        if(productImage != null){
+            String fileNames = StringUtils.cleanPath(productImage.getOriginalFilename());
+            product.setImageName(fileNames);
+            product.setFileType(productImage.getContentType());
+            try {
+                product.setData(productImage.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+      /*  if (productImage != null && !productImage.isEmpty()) {
             try {
                 ClassLoader classLoader = getClass().getClassLoader();
                 String rootDirectory = classLoader.getResource(".").getFile();
@@ -81,18 +101,7 @@ public class ProductController {
                 //throw new RuntimeException("Student Image saving failed", e);
                 throw new UploadFileException("Student Image saving failed");
             }
-        }
-
-        if(productImage != null){
-            //String fileName = StringUtils.cleanPath(productImage.getOriginalFilename());
-            product.setImageName(fileName);
-            /*product.setFileType(productImage.getContentType());
-            try {
-                product.setData(productImage.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-        }
+        }*/
 
             productService.saveProduct(product);
             redirectAttributes.addFlashAttribute("msg", "Success");
@@ -102,8 +111,10 @@ public class ProductController {
 
     @GetMapping("/dashboard")
     public String manageSeller(Model model){
-        model.addAttribute("seller",sellerService.findById((long) 1));
-
+        //model.addAttribute("seller",sellerService.findById((long) 1));
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        model.addAttribute("pId", userService.getLoggedUser().get().getId());
         return "dashboardHeader";
     }
 
@@ -111,25 +122,74 @@ public class ProductController {
     public ModelAndView listProductPageByPage(@PathVariable("page")int page){
         ModelAndView modelAndView = new ModelAndView("manageProduct");
         PageRequest pageable = PageRequest.of(page - 1, 15);
-        Page<Product> productPage = productService.getPaginatedProduct(pageable);
+        //Page<Product> productPage = productService.getPaginatedProduct(pageable);
+
+        //Only login Seller do this
+        Seller seller = (Seller) userService.getLoggedUser().get();
+
+        Page<Product> productPage = productService.findBySellerId(pageable,userService.getLoggedUser().get().getId());
         int totalPages = productPage.getTotalPages();
         if(totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
         //Only login Seller do this
-        Seller seller = sellerService.findById((long) 1);
+        //Seller seller = (Seller) userService.getLoggedUser().get();
+        modelAndView.addObject("pId", userService.getLoggedUser().get().getId());
         modelAndView.addObject("seller",seller);
 
 
         modelAndView.addObject("activeProductList", true);
         modelAndView.addObject("productList", productPage.getContent());
+        modelAndView.addObject("imgUtil", new ImageUtil());
         return modelAndView;
     }
 
     @RequestMapping("/productDetails/{productId}")
     public String editProduct(@PathVariable("productId")Long productId, Model model){
-       model.addAttribute("productById", productService.findProductById(productId));
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        model.addAttribute("imgUtil", new ImageUtil());
+        model.addAttribute("productById", productService.findProductById(productId));
         return "productDetails";
+    }
+
+    @RequestMapping(value = "/deleteProduct/{productId}")
+    public String deleteProductById(@PathVariable("productId")Long productId, Model model){
+        Product product = productService.findProductById(productId);
+        if(product != null){
+            productService.deleteProductById(productId);
+        }
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        return "manageProduct";
+    }
+
+    @GetMapping("/editProduct/{productId}")
+    public String editProductById(@PathVariable("productId")Long productId,@ModelAttribute("product")Product product, Model model,
+                                    RedirectAttributes redirectAttributes){
+
+        //Product product1 =productService.findProductById(productId);
+        //product1.setMultipartFile(new CustomMultipartFile(product.getData(),product1.getImageName()));
+
+        model.addAttribute("product", productService.findProductById(productId));
+        model.addAttribute("categories", categoryService.findAllCategory());
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        model.addAttribute("imgUtil", new ImageUtil());
+        return "editProduct";
+    }
+
+    @PostMapping("/updateProduct")
+    public String updateProductBy(@ModelAttribute("product")Product product,Model model,RedirectAttributes redirectAttributes){
+        Product product1 = productService.findProductById(product.getId());
+        product.setData(product1.getData());
+        product.setSeller(product1.getSeller());
+        productService.saveProduct(product);
+        redirectAttributes.addFlashAttribute("msg", "Success");
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+        redirectAttributes.addFlashAttribute("msg", "Success");
+        return "sellerDashboard";
     }
 }

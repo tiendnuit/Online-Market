@@ -19,13 +19,14 @@
             <div style="margin-top: 15px;">
                 <li class="has-submenu">
                     <a th:href="@{/product/productList/1}">
+                        <!--<a th:href="@{/product/productList/{productId}(productId=${pId})}"> -->
                         <span class="nav-text">Manage Product</span>
                     </a>
                 </li>
             </div>
             <!--/*@thymesVar id="approved" type=""*/-->
-            <!--<li th:if="${seller.approved == true}">-->
-            <li>
+            <li th:if="${seller.approved}==true">
+
                 <a th:href="@{/product/productAddForm}">
                     <span class="nav-text">Add Product</span>
                 </a>
@@ -35,7 +36,7 @@
                     <span class="nav-text">Manage Orders</span>
                 </a>
             </li>
-            <li>
+            <li th:if="${seller.approved eq true}">
                 <a th:href="@{/category/categoryInputForm}">
                     <span class="nav-text">Add Category</span>
                 </a>
