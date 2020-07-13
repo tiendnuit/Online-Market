@@ -34,12 +34,16 @@ public class Order implements Serializable {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLine> orderLines = new ArrayList<>();
 
     @Enumerated
     @Column(columnDefinition = "smallint")
     private OrderStatus status = OrderStatus.NEW;
+
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
     @Transient
     public Double getTotalPrice() {

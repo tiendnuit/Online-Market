@@ -51,7 +51,7 @@ public class CheckoutController {
 
         order.setBuyer((Buyer) user);
         order.setSeller(getSellerFromShoppingCart(shoppingCart));
-        order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines()));
+        order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines(), order));
 
         orderService.save(order);
 
@@ -66,10 +66,10 @@ public class CheckoutController {
         return shoppingCartLines.get(0).getProduct().getSeller();
     }
 
-    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines) {
+    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines, Order order) {
         List<OrderLine> orderLines = new ArrayList<>();
         for (ShoppingCartLine line : shoppingCartLines) {
-            orderLines.add(new OrderLine(line.getProduct(), line.getQuantity()));
+            orderLines.add(new OrderLine(line.getProduct(), line.getQuantity(), order));
         }
         return orderLines;
     }
