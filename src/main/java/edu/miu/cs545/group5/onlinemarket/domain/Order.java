@@ -33,6 +33,10 @@ public class Order implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderLine> orderLines = new ArrayList<>();
 
+    @Enumerated
+    @Column(columnDefinition = "smallint")
+    private OrderStatus status = OrderStatus.NEW;
+
     @Transient
     public Double getTotalPrice() {
         double sum = 0D;
