@@ -40,7 +40,7 @@ public class RegistrationController {
                     "There is already one registered with the email provided");
             return SIGN_UP_VIEW;
         }
-        userService.save(user);
+        userService.create(user);
         return "redirect:/login";
     }
 }
