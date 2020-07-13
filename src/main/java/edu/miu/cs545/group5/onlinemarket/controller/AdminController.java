@@ -42,9 +42,9 @@ public class AdminController {
     @ModelAttribute("notApprovedUsers")
     public List<? extends User> notActiveUsers(Model model) {
         return userService.getNotApprovedUsers();
-
     }
-         public void updateUser(Long id){
+
+    public void updateUser(Long id){
 
         User user = userService.getById(id).get();
 
@@ -59,16 +59,12 @@ public class AdminController {
         userService.save(user);
     }
 
-        @ModelAttribute("/enableUser")
-        public void enableUser(Long id){
-            userService.enableUser(id);
-        }
-        @ModelAttribute("users")
-        @RequestMapping("/allUsers")
-        public String getAllUsersExceptAdmin(Model model){
-            List<User> users = userService.findAllUserSellersAndBuyers();
-            model.addAttribute("users", users);
-            return "_tab1";
+    @ModelAttribute("users")
+    //@RequestMapping("/allUsers")
+    public List<User> getAllUsersExceptAdmin(Model model){
+        List<User> users = userService.findAllUserSellersAndBuyers();
+        //model.addAttribute("users", users);
+        return users;
     }
 
 }
