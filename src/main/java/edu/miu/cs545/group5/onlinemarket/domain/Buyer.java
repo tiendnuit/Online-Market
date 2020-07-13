@@ -20,9 +20,9 @@ public class Buyer extends User {
     @ManyToMany
     private List<Seller> followings = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private ShoppingCart shoppingCart;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="shoppingcart_id")
+    private ShoppingCart shoppingCart = new ShoppingCart();
 
     public Buyer() {
         this.role = Constants.ROLE_BUYER;

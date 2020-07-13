@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Online Market</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+
+        .rating-box{position:relative;font-size:1rem;display:inline-block;color:#f68127}
+        .rating-box:before{content:"\2606 \2606 \2606 \2606 \2606"}
+        .rating-box .rating{position:absolute;left:0;top:0;white-space:nowrap;overflow:hidden;color:#f68127}
+        .rating-box .rating:before{content:"\2605 \2605 \2605 \2605 \2605"}
+        .cover{width:100%;max-height:240px}
+
+        .gallery-wrap .img-big-wrap img {
+            height: 400px;
+            width: auto;
+            display: inline-block;
+            cursor: zoom-in;
+        }
+
+        .gallery-wrap .img-small-wrap .item-gallery {
+            width: 64px;
+            height: 64px;
+            border: 1px solid #ddd;
+            margin: 7px 2px;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .gallery-wrap .img-small-wrap {
+            text-align: center;
+        }
+        .gallery-wrap .img-small-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: zoom-in;
+        }
+
+        .img-sm {
+            width: 80px;
+            height: 80px;
+        }
+
+        .itemside {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+        }
+
+        .itemside .info {
+            padding-left: 15px;
+            padding-right: 7px;
+        }
+
+        .img-xs {
+            width: 40px;
+            height: 40px;
+        }
+
+        @media print {
+            /* on modal open bootstrap adds class "modal-open" to body, so you can handle that case and hide body */
+            body.modal-open {
+                visibility: hidden;
+            }
+            /*body.modal-open .modal .modal-header,*/
+            body.modal-open .modal .modal-body {
+                visibility: visible; /* make visible modal body and header */
+                margin-left: -240px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <a class="navbar-brand" th:href="@{/}"><i class="fa fa-shipping-fast"></i> Online Market</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <form class="form-inline col-6" th:action="@{/products}" method="get">
+            <input class="form-control mr-sm-2 col-8" type="search" placeholder="product name" aria-label="Search"
+            name="keyword" th:value="${param.keyword}">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <ul class="navbar-nav ml-auto">
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle"></i> Hi <span sec:authorize="!isAuthenticated()">guest</span>
+                    <span sec:authorize="hasAnyRole('SELLER', 'BUYER', 'ADMIN')" th:text ="${#authentication.principal.fullName}"></span>
+                    <span sec:authorize="hasRole('SADMIN')">Super Admin</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" sec:authorize="!isAuthenticated()">
+                    <a class="dropdown-item" th:href="@{/sign-up}">Register</a>
+                    <a class="dropdown-item" th:href="@{/login}">Login</a>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" sec:authorize="isAuthenticated()">
+                    <a class="dropdown-item" th:href="@{/profile}" sec:authorize="hasAnyRole('SELLER', 'BUYER')"><span th:text ="${#authentication.principal.memberType}"></span> Page
+                    </a>
+                    <a class="dropdown-item" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN','SADMIN')">Dashboard</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
+                </div>
+            </li>
+            <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/cart' ? 'active' : '' }">
+                <a class="nav-link" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Your cart <span class="badge badge-pill badge-light" id="cart-item-count">0</span></a>
+            </li>
+            <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : '' }">
+                <a class="nav-link" th:href="@{/contact}">Contact Us</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<!-- Content Section -->
+<section layout:fragment="content">
+    <p>This is filled by the content template.</p>
+</section>
+
+<!-- Footer -->
+<footer class="container-fluid py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <p class="text-muted">&copy; 2020 Online Market. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<!-- Optional Section -->
+<th:block layout:fragment="optional" />
+
+</body>
+</html>

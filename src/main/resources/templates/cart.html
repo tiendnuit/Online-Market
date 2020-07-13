@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Cart page</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<div layout:fragment="content">
+    <section class="my-5">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Your cart</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-primary" role="alert" th:if="${#lists.isEmpty(shoppingCart.shoppingCartLines)}">
+                        Cart is Empty
+                    </div>
+                    <div class="card" th:unless="${#lists.isEmpty(shoppingCart.shoppingCartLines)}">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-borderless table-shopping-cart">
+                                <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Product</th>
+                                    <th scope="col" width="120">Quantity</th>
+                                    <th scope="col" width="170">Price</th>
+                                    <th scope="col" class="text-right" width="100"> </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${shoppingCart.shoppingCartLines}">
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-sm"></div>
+                                            <figcaption class="info">
+                                                <a href="#" th:href="@{/product-detail(pid=${item.product.id})}" class="title text-dark" th:text="${item.product.name}">Camera Canon EOS M50 Kit</a>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" th:value="${item.quantity}" min="1" max="100" step="1"
+                                               th:onchange="|updateCartItemQuantity(${item.product.id},this.value)|"/>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price" >$[[${#numbers.formatDecimal(item.totalPrice,1,2)}]]</var>
+                                        </div>
+                                    </td>
+                                    <td class="text-right d-none d-md-block">
+                                        <a class="btn btn-sm btn-outline-danger" href="#"
+                                           th:onclick="|removeItemFromCart(${item.product.id})|"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="card-body border-top">
+                            <a th:href="@{/checkout-shipping}" class="btn btn-outline-primary">Check out</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div>
+    <button onclick="addItemToCart(12,2);">Add to cart</button>
+</div>
+
+<div layout:fragment="optional">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</div>
+
+</body>
+</html>
