@@ -24,13 +24,7 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    EmailService emailService;
-
-    @Autowired
     BuyerService buyerService;
-
-    @Autowired
-    UserService userService;
 
     private Boolean hasRole(String role) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -55,22 +49,6 @@ public class HomeController {
     @GetMapping(value = {"buyer/home"})
     public String buyerHome() {
         return "buyer_home";
-    }
-
-    @GetMapping(value = {"buyer/sendEmail"})
-    public String sendEmail() throws IOException, MessagingException {
-        Order order = new Order();
-        order.setId(112233L);
-        emailService.sendPurchaseConfirmation(order);
-        return "redirect:/buyer/home";
-    }
-
-    ///
-    @GetMapping(value = {"buyer/followings"})
-    public String buyerFollowings(Model model) {
-        Buyer currentUser = (Buyer)userService.getLoggedUser().get();
-        model.addAttribute("followings", currentUser.getFollowings());
-        return "list_followings";
     }
 
 }
