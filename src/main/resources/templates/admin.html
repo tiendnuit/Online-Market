@@ -44,13 +44,41 @@
     <div class="row">
         <div class="col">
             <ul class="nav nav-tabs mt-5" id="myTabs">
-                <li class="nav-item"><a href="#tab1" data-url="/tab1" class="nav-link active" >Buyer</a></li>
-                <li class="nav-item"><a href="#tab2" data-url="/tab2" class="nav-link">Seller</a></li>
-                <li class="nav-item"><a href="#tab3" data-url="/tab3" class="nav-link">Tab3</a></li>
+                <li class="nav-item"><a href="#tab1" data-url="/admin/tab1" class="nav-link active" >Buyer</a></li>
+                <li class="nav-item"><a href="#tab2" data-url="/admin/tab2" class="nav-link">Seller</a></li>
+                <li class="nav-item"><a href="#tab3" data-url="/admin/tab3" class="nav-link">Tab3</a></li>
             </ul>
 
             <div class="tab-content pt-3">
-                <div class="tab-pane active" id="tab1">Active panel</div>
+                <div class="tab-pane active" id="tab1">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email Address</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Approved</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="users, iter: ${users}">
+                            <th scope="row" th:text="${iter.index + 1}" >1</th>
+                            <td th:text="${users.firstName}">Mark</td>
+                            <td th:text="${users.lastName}">Otto</td>
+                            <td th:text="${users.email}" >Otto@gmail.com</td>
+                            <td th:text="${users.phone}">164-0987-124</td>
+                            <td style="text-indent: 10px">
+                                <!--            <label th:for="${#ids.next('covered')}" th:text="#{seller.approved}">Covered</label>-->
+                                <input type="checkbox"  name="${seller.id}" th:checked="${users.approved}" />
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="tab-pane" id="tab2"></div>
                 <div class="tab-pane" id="tab3"></div>
             </div>

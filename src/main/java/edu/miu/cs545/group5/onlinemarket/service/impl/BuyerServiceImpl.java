@@ -16,6 +16,9 @@ public class BuyerServiceImpl implements BuyerService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    BuyerRepository buyerRepository;
+
     @Override
     public void unfollowSeller(Long id) {
         Buyer currentUser = (Buyer)userService.getLoggedUser().get();
@@ -40,5 +43,11 @@ public class BuyerServiceImpl implements BuyerService {
         sellers.add(seller);
         currentUser.setFollowings(sellers);
         userService.save(currentUser);
+
+    }
+
+
+    public List<Buyer> findAllBuyers(){
+        return  buyerRepository.findAllBuyers();
     }
 }
