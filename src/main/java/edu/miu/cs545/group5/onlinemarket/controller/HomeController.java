@@ -1,22 +1,36 @@
 package edu.miu.cs545.group5.onlinemarket.controller;
 
 import edu.miu.cs545.group5.onlinemarket.config.Constants;
+import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
 import edu.miu.cs545.group5.onlinemarket.domain.Order;
+import edu.miu.cs545.group5.onlinemarket.domain.Seller;
+import edu.miu.cs545.group5.onlinemarket.domain.User;
+import edu.miu.cs545.group5.onlinemarket.service.BuyerService;
 import edu.miu.cs545.group5.onlinemarket.service.EmailService;
+import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class HomeController {
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    BuyerService buyerService;
+
+    @Autowired
+    UserService userService;
 
     private Boolean hasRole(String role) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -38,11 +52,6 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping(value = {"seller/home"})
-    public String sellerHome() {
-        return "seller_home";
-    }
-
     @GetMapping(value = {"buyer/home"})
     public String buyerHome() {
         return "buyer_home";
@@ -55,4 +64,13 @@ public class HomeController {
         emailService.sendPurchaseConfirmation(order);
         return "redirect:/buyer/home";
     }
+
+    ///
+    @GetMapping(value = {"buyer/followings"})
+    public String buyerFollowings(Model model) {
+        Buyer currentUser = (Buyer)userService.getLoggedUser().get();
+        model.addAttribute("followings", currentUser.getFollowings());
+        return "list_followings";
+    }
+
 }

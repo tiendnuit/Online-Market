@@ -7,12 +7,15 @@ import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +61,7 @@ public class UserServiceImpl implements UserService {
                     user.getEmail(), user.getPhone(),
                     user.getBirthDate(), user.getPassword(),
                     user.getAddress(), user.getRole(),
-                    user.getActive(), 0, false);
+                    user.getActive(), 0, new ArrayList<>());
         }
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setActive(1);
@@ -72,9 +75,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getLoggedUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = ((UserDetails) principal).getUsername();
-        return userRepository.findByEmail(email);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Object principal = authentication.getPrincipal();
+            String email = ((UserDetails) principal).getUsername();
+            return userRepository.findByEmail(email);
+        }
+        return null;
     }
 
 

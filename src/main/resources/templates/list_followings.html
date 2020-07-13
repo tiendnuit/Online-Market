@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+
+<h3> Followings </h3>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="seller, iter: ${followings}">
+        <th scope="row" th:text="${iter.index + 1}" >1</th>
+        <td th:text="${seller.firstName}">Mark</td>
+        <td th:text="${seller.lastName}">Otto</td>
+        <td th:text="${seller.email}" >Otto@gmail.com</td>
+        <td th:text="${seller.phone}">164-0987-124</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -8,13 +8,17 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 @DiscriminatorValue("buyer")
 public class Buyer extends User {
     private int point = 0;
-    private boolean follow = false;
+
+    @ManyToMany
+    private List<Seller> followings = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private ShoppingCart shoppingCart;
@@ -30,10 +34,10 @@ public class Buyer extends User {
                  @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX") String phone,
                  @Past LocalDate birthDate, @Size(min = 6, message = "Password must be 6 characters") String password,
                  @Valid Address address, String role,
-                 int active, int point, boolean follow) {
+                 int active, int point, List<Seller> followings) {
         super(firstName, lastName, email, phone, birthDate, password, address, role, active);
         this.point = point;
-        this.follow = follow;
+        this.followings = followings;
         this.shoppingCart = new ShoppingCart();
     }
 
@@ -45,12 +49,12 @@ public class Buyer extends User {
         this.point = point;
     }
 
-    public boolean isFollow() {
-        return follow;
+    public List<Seller> getFollowings() {
+        return followings;
     }
 
-    public void setFollow(boolean follow) {
-        this.follow = follow;
+    public void setFollowings(List<Seller> followings) {
+        this.followings = followings;
     }
 
     public ShoppingCart getShoppingCart() {
