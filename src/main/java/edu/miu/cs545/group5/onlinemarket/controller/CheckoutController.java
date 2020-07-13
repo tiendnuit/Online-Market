@@ -48,6 +48,7 @@ public class CheckoutController {
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
 
         order.setBuyer((Buyer) user);
+        order.setSeller(getSellerFromShoppingCart(shoppingCart));
         order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines()));
 
         orderService.save(order);
@@ -55,9 +56,14 @@ public class CheckoutController {
         return "complete";
     }
 
-    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines){
+    public Seller getSellerFromShoppingCart(ShoppingCart shoppingCart) {
+        List<ShoppingCartLine> shoppingCartLines = shoppingCart.getShoppingCartLines();
+        return shoppingCartLines.get(0).getProduct().getSeller();
+    }
+
+    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines) {
         List<OrderLine> orderLines = new ArrayList<>();
-        for(ShoppingCartLine line : shoppingCartLines){
+        for (ShoppingCartLine line : shoppingCartLines) {
             orderLines.add(new OrderLine(line.getProduct(), line.getQuantity()));
         }
         return orderLines;
