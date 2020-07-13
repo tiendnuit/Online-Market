@@ -1,9 +1,6 @@
 package edu.miu.cs545.group5.onlinemarket.config;
 
-import edu.miu.cs545.group5.onlinemarket.domain.Address;
-import edu.miu.cs545.group5.onlinemarket.domain.Category;
-import edu.miu.cs545.group5.onlinemarket.domain.Seller;
-import edu.miu.cs545.group5.onlinemarket.domain.User;
+import edu.miu.cs545.group5.onlinemarket.domain.*;
 import edu.miu.cs545.group5.onlinemarket.repository.CategoryRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
@@ -39,11 +36,11 @@ public class DataLoader implements ApplicationRunner {
         User seller1 = new Seller("Walmart", "Walmart",
                 "walmart@gmail.com", "222-333-4444",
                 LocalDate.parse("1950-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_SELLER, 1, false);
+                address, Constants.ROLE_SELLER, 0, true);
         User seller2 = new Seller("Amazon", "Amazon",
                 "amazon@gmail.com", "333-444-5555",
                 LocalDate.parse("1995-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_SELLER, 1, false);
+                address, Constants.ROLE_SELLER, 0, false);
         User seller3 = new Seller("Best Buy", "Best Buy",
                 "bestbuy@gmail.com", "333-444-5555",
                 LocalDate.parse("1995-10-27"), passwordEncoder.encode("123456"),
@@ -52,6 +49,7 @@ public class DataLoader implements ApplicationRunner {
                 "apple@gmail.com", "333-444-5555",
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
                 address, Constants.ROLE_SELLER, 1, false);
+
 
         //Category
         Category computer = new Category("Computer", "This is Computer category");

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h3> Buyer's Review Pending for Approval </h3>
+<h3> Seller</h3>
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -18,20 +18,39 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email Address</th>
         <th scope="col">Phone Number</th>
-        <th scope="col">Approved</th>
+        <th scope="col">Street</th>
+        <th scope="col">City</th>
+        <th scope="col">State</th>
+        <th scope="col">ZipCode</th>
+        <th scope="col">Active</th>
+
     </tr>
     </thead>
     <tbody>
 
-    <tr th:each="users, iter: ${users}">
+    <tr th:each="user, iter: ${buyers}">
         <th scope="row" th:text="${iter.index + 1}" >1</th>
-        <td th:text="${users.firstName}">Mark</td>
-        <td th:text="${users.lastName}">Otto</td>
-        <td th:text="${users.email}" >Otto@gmail.com</td>
-        <td th:text="${users.phone}">164-0987-124</td>
-        <td style="text-indent: 10px">
-<!--            <label th:for="${#ids.next('covered')}" th:text="#{seller.approved}">Covered</label>-->
-            <input type="checkbox"  name="${seller.id}" th:checked="${users.approved}" />
+        <!--/*@thymesVar id="firstName" type=""*/-->
+        <td th:text="${user.firstName}">Mark</td>
+        <td th:text="${user.lastName}">Otto</td>
+        <td th:text="${user.email}" >Otto@gmail.com</td>
+        <td th:text="${user.phone}">164-0987-124</td>
+        <td th:text="${user.address.street}">City</td>
+        <td th:text="${user.address.city}">city</td>
+        <td th:text="${user.address.state}">state</td>
+        <td th:text="${user.address.zipCode}">ZipCode</td>
+
+            <td th:if="${user.active}==1">
+                <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-success">Enabled</a>
+            </td>
+            <td th:unless="${user.active}">
+                <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-danger">Disabled</a>
+            </td>
+        <td th:if="${user.approved}==false">
+            <a th:href="@{/admin/approveUser/{userId}(userId=${user.id})}"   class="btn btn-success">Approve</a>
+        </td>
+        <td th:unless="${user.approved}">
+            <a th:href="@{/admin/approveUser/{userId}(userId=${user.id})}"   class="btn btn-danger">Disabled</a>
         </td>
 
     </tr>
