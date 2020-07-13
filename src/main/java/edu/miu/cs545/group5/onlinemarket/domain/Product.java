@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,6 +51,23 @@ public class Product implements Serializable {
     private List<ProductReview> reviews;
 
     public Product() {
+    }
+
+    public Product(@NotBlank String name,
+                   @NotNull Double price,
+                   @NotNull Integer stock,
+                   @NotBlank String description,
+                   String imageName,
+                   @NotNull Category category,
+                   Seller seller) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.description = description;
+        this.imageName = imageName;
+        this.category = category;
+        this.seller = seller;
+        this.reviews = new ArrayList<>();
     }
 
     public Long getId() {

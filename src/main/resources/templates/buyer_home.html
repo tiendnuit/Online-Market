@@ -7,7 +7,20 @@
 <body>
     <p> Welcome Buyer, Online Market!</p>
     <p><a href="#" th:href="@{/buyer/sendEmail}">Send Email</a></p>
+    <p><a href="#" th:href="@{/buyer/followings}">Followings</a></p>
     <p><a href="#" th:href="@{/logout}">Logout</a></p>
-
+    <div>
+        <p>HP computer</p>
+        <button onclick="addItemToCart(12,1);">Add to cart</button>
+    </div>
+    <div>
+        <p>	Java Programming</p>
+        <button onclick="addItemToCart(14,1);">Add to cart</button>
+    </div>
+    <div>
+        <a href="/cart">Checkout</a>
+    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>

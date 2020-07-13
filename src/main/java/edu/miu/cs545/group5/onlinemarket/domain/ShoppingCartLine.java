@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderLine implements Serializable {
+public class ShoppingCartLine implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,11 +23,6 @@ public class OrderLine implements Serializable {
     private Product product;
 
     private Integer quantity;
-
-    public OrderLine(Product product, Integer quantity) {
-        this.product = product;
-        this.quantity = quantity;
-    }
 
     @Transient
     public Double getTotalPrice() {

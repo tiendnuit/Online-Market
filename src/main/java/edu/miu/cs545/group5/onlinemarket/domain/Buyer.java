@@ -4,24 +4,25 @@ import edu.miu.cs545.group5.onlinemarket.config.Constants;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 @DiscriminatorValue("buyer")
 public class Buyer extends User {
     private int point = 0;
-    private boolean follow = false;
 
-    @OneToOne
-    private ShoppingCart shoppingCart;
+    @ManyToMany
+    private List<Seller> followings = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="shoppingcart_id")
+    private ShoppingCart shoppingCart = new ShoppingCart();
 
     public Buyer() {
         this.role = Constants.ROLE_BUYER;
@@ -33,11 +34,11 @@ public class Buyer extends User {
                  @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone must match format XXX-XXX-XXXX") String phone,
                  @Past LocalDate birthDate, @Size(min = 6, message = "Password must be 6 characters") String password,
                  @Valid Address address, String role,
-                 int active, int point, boolean follow) {
+                 int active, int point, List<Seller> followings) {
         super(firstName, lastName, email, phone, birthDate, password, address, role, active);
         this.point = point;
-        this.follow = follow;
-        this.shoppingCart = shoppingCart;
+        this.followings = followings;
+        this.shoppingCart = new ShoppingCart();
     }
 
     public int getPoint() {
@@ -48,12 +49,12 @@ public class Buyer extends User {
         this.point = point;
     }
 
-    public boolean isFollow() {
-        return follow;
+    public List<Seller> getFollowings() {
+        return followings;
     }
 
-    public void setFollow(boolean follow) {
-        this.follow = follow;
+    public void setFollowings(List<Seller> followings) {
+        this.followings = followings;
     }
 
     public ShoppingCart getShoppingCart() {
