@@ -30,7 +30,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "buyer_id")
     private Buyer buyer;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderLine> orderLines = new ArrayList<>();
 
     @Transient
