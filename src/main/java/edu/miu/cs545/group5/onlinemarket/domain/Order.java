@@ -26,10 +26,6 @@ public class Order implements Serializable {
     @Valid
     private Address shippingAddress;
 
-    @Embedded
-    @Valid
-    private Address billingAddress;
-
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     private Buyer buyer;

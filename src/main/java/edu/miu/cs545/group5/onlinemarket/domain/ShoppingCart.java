@@ -20,8 +20,7 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "buyer_id")
+    @OneToOne(mappedBy="shoppingCart")
     private Buyer buyer;
 
     @OneToMany
