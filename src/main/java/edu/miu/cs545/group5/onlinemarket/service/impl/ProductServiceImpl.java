@@ -35,4 +35,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Product> findBySellerId(Pageable pageable, Long id) {
+        return productRepository.findBySellerId(pageable,id);
+    }
+
 }

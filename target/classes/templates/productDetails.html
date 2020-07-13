@@ -8,9 +8,9 @@
  <div th:insert="dashboardHeader.html :: dashboardHeaderBar"></div>
  <div class="main-container">
      <div class="page-header">
-         <h3>Seller Dashboard <small>Welcome back <span class="text-primary">Maria Fällström</span></small></h3>
+         <h3>Seller Dashboard <small>Welcome back <span class="text-primary" th:text="${seller.firstName}">Maria Fällström</span></small></h3>
          <ol class="breadcrumb">
-             <li><a href="index.php">Home</a></li>
+             <li><a th:href="@{/seller/sellerDashboard}">Home</a></li>
          </ol>
      </div>
      <div id="global" class="container">
@@ -24,16 +24,25 @@
                    Price : <span th:text="${productById.price}"/>
                </p>
                  <p>
+                     Available Quantity : <span th:text="${productById.stock}"/>
+                 </p>
+                 <p>
                      Category : <span th:text="${productById.category.categoryName}"/>
                  </p>
                  <p>
                      Description : <span th:text="${productById.description}"/>
                  </p>
                  <p>
-                     <img th:src="@{/images/{image}(image=${productById.imageName})}">
+                    <!-- <img th:src="@{/images/{image}(image=${productById.imageName})}" alt="Image">-->
+                    <!-- <img th:src="@{/images/b84bc0b0-dfc9-41c7-bdb8-b577c5ffed64.png}">-->
+                     <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(productById.getData())}" th:class="image-style"/>
                  </p>
              </div>
          </fieldset>
+
+         <a th:href="@{/seller/sellerDashboard}" class="btn btn-primary">
+             <span class="glyphicon-hand-left glyphicon"></span> Back
+         </a>
      </div>
  </div>
 </body>

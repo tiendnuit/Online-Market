@@ -39,7 +39,7 @@ public class DataLoader implements ApplicationRunner {
         User seller1 = new Seller("Walmart", "Walmart",
                 "walmart@gmail.com", "222-333-4444",
                 LocalDate.parse("1950-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_SELLER, 1, false);
+                address, Constants.ROLE_SELLER, 1, true);
         User seller2 = new Seller("Amazon", "Amazon",
                 "amazon@gmail.com", "333-444-5555",
                 LocalDate.parse("1995-10-27"), passwordEncoder.encode("123456"),

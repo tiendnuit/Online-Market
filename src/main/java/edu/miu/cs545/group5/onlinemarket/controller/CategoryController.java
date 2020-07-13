@@ -1,7 +1,9 @@
 package edu.miu.cs545.group5.onlinemarket.controller;
 
 import edu.miu.cs545.group5.onlinemarket.domain.Category;
+import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
+import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,13 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/categoryInputForm")
     public String getCategoryInputForm(@ModelAttribute("category")Category category,Model model){
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
         return "categoryRegistrationForm";
     }
 
@@ -32,8 +39,12 @@ public class CategoryController {
         if(bindingResult.hasErrors()){
             return "categoryRegistrationForm";
         }
+
         redirectAttributes.addFlashAttribute("msg", "Success");
         categoryService.saveCategory(category);
+        Seller seller = (Seller) userService.getLoggedUser().get();
+        model.addAttribute("seller", seller);
+
         model.addAttribute("category", category);
         model.addAttribute("msg", "Success");
         return "redirect:/category/categoryInputForm";

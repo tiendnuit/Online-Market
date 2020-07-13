@@ -45,8 +45,14 @@ select{
     color: green;
 }
 
+.image-style{
+    height: 200px !important;
+}
 .page-header{
     padding-top: 10px;
+}
+.p-margin{
+    margin-bottom: 0px;
 }
 /**
 
