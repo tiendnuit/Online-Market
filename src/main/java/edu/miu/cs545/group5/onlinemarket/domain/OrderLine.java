@@ -18,15 +18,19 @@ public class OrderLine implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Order order;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     private Integer quantity;
 
-    public OrderLine(Product product, Integer quantity) {
+    public OrderLine(Product product, Integer quantity, Order order) {
         this.product = product;
         this.quantity = quantity;
+        this.order = order;
     }
 
     @Transient
