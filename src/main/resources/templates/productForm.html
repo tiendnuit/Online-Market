@@ -15,7 +15,7 @@
     </div>
 
 <div id="global" class="container">
-    <form th:action="@{/product/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/seller/product/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
         <fieldset>
             <h2> Product Registration Form</h2>
             <div th:if="${msg}"><h4 class="success-msg">Successfully Finish Product Registration</h4></div>

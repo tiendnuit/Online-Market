@@ -9,9 +9,9 @@
 <div class="main-container">    <!-- START: Main Container -->
 
     <div class="page-header">
-        <h1>Seller Dashboard <small>Welcome back <span class="text-primary">Maria Fällström</span></small></h1>
+        <h1>Seller Dashboard <small>Welcome back <span class="text-primary" th:text="${seller.firstName}">Maria Fällström</span></small></h1>
         <ol class="breadcrumb">
-            <li><a href="index.php">Home</a></li>
+            <li><a th:href="@{/seller/sellerDashboard}">Home</a></li>
         </ol>
     </div>
 <div id="global" class="container">

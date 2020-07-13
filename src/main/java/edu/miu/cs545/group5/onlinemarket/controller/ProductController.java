@@ -1,11 +1,8 @@
 package edu.miu.cs545.group5.onlinemarket.controller;
 
-import edu.miu.cs545.group5.onlinemarket.config.CustomMultipartFile;
 import edu.miu.cs545.group5.onlinemarket.config.ImageUtil;
 import edu.miu.cs545.group5.onlinemarket.domain.Product;
-import edu.miu.cs545.group5.onlinemarket.domain.Seller;
-import edu.miu.cs545.group5.onlinemarket.domain.User;
-import edu.miu.cs545.group5.onlinemarket.exception.UploadFileException;
+import edu.miu.cs545.group5.onlinemarket.domain.Seller;;
 import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
 import edu.miu.cs545.group5.onlinemarket.service.ProductService;
 import edu.miu.cs545.group5.onlinemarket.service.SellerService;
@@ -22,23 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/seller/product")
 public class ProductController {
 
     @Autowired
@@ -73,8 +61,9 @@ public class ProductController {
             return "productForm";
         }
         product.setSeller(seller);
+
         //String uploadDir = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"uploadImage";
-        String  fileName = UUID.randomUUID().toString();
+        //String  fileName = UUID.randomUUID().toString();
         MultipartFile productImage = product.getMultipartFile();
 
         if(productImage != null){
@@ -105,7 +94,7 @@ public class ProductController {
 
             productService.saveProduct(product);
             redirectAttributes.addFlashAttribute("msg", "Success");
-            return "redirect:/product/productAddForm";
+            return "redirect:/seller/product/productAddForm";
 
     }
 
