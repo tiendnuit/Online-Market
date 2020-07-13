@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderLine implements Serializable {
+public class ShoppingCartLine implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

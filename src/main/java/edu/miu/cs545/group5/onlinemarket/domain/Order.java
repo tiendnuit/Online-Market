@@ -1,5 +1,6 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Order implements Serializable {
     @Id
     @GeneratedValue
@@ -24,20 +26,29 @@ public class Order implements Serializable {
     @Valid
     private Address shippingAddress;
 
-
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-    private List<OrderLine> orderLines = new ArrayList<>();
+    @Embedded
+    @Valid
+    private Address billingAddress;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "buyer_id")
     private Buyer buyer;
 
-    public Long getId() {
-        return id;
+    @OneToMany
+    private List<OrderLine> orderLines = new ArrayList<>();
+
+    @Transient
+    public Double getTotalPrice() {
+        double sum = 0D;
+        List<OrderLine> orderLines = getOrderLines();
+        for (OrderLine ol : orderLines) {
+            sum += ol.getTotalPrice();
+        }
+        return sum;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Transient
+    public int getNumberOfProducts() {
+        return this.orderLines.size();
     }
 }
