@@ -34,7 +34,7 @@ public class Buyer extends User {
         super(firstName, lastName, email, phone, birthDate, password, address, role, active);
         this.point = point;
         this.follow = follow;
-        this.shoppingCart = shoppingCart;
+        this.shoppingCart = new ShoppingCart();
     }
 
     public int getPoint() {
