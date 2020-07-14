@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
     void save(Order order);
+    Order getOrderByBuyerId(Long id);
 
     public Page<Order> findPageableOrderBySellerId(Pageable pageable, Long id);
     public void cancelOrderById(Long orderId);
