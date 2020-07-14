@@ -61,6 +61,9 @@ public class ShopController {
                 if (buyer.getFollowings().contains(product.getSeller())) {
                     product.getSeller().setFollowingByCurrentUser(true);
                 }
+
+                product.updateCurrentUserReviewIfNeeded(buyer.getId());
+
             }
         }
         model.addAttribute("product", product);
