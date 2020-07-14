@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Online</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="css/shop.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="fragments/shop_header :: header">...</div>
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+    <h3> Followings </h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="order, iter: ${orders}">
+            <th scope="row" th:text="${iter.index + 1}" >1</th>
+            <td th:text="${order.seller.firstName + ' ' + order.seller.lastName}">Mark</td>
+            <td th:text="${order.status}">Paid</td>
+            <td th:text="${order.total}">100</td>
+            <td class="text-right d-none d-md-block">
+                <a class="btn btn-sm btn-outline-danger btn-unfollow" href="#" th:id="${order.id}">Print</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div layout:fragment="optional">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
+</div>
+</body>
+</html>
