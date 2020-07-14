@@ -151,10 +151,6 @@ public class UserServiceImpl implements UserService {
             String email = ((UserDetails) principal).getUsername();
             return userRepository.findByEmail(email);
         }
-        return null;
+        return Optional.empty();
     }
-
-
-
-
 }

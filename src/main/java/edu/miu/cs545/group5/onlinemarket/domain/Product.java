@@ -1,10 +1,17 @@
 package edu.miu.cs545.group5.onlinemarket.domain;
 
+import com.google.common.io.ByteStreams;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +75,19 @@ public class Product implements Serializable {
         this.category = category;
         this.seller = seller;
         this.reviews = new ArrayList<>();
+
+        if(imageName != null){
+            try {
+                ClassLoader classLoader = getClass().getClassLoader();
+                String rootDirectory = URLDecoder.decode(classLoader.getResource(".").getFile(), "UTF-8");
+                File newFile = new File(rootDirectory + "static/images/" + imageName);
+                FileInputStream stream = new FileInputStream(newFile);
+                this.data = Files.readAllBytes(newFile.toPath());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Long getId() {
