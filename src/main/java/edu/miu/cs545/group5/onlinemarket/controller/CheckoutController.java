@@ -78,6 +78,7 @@ public class CheckoutController {
         }
 
         order.setPayment(payment);
+        order.setStatus(OrderStatus.PAID);
 
         payment.setBuyer((Buyer) user);
         paymentService.save(payment);

@@ -40,7 +40,6 @@ public class Order implements Serializable {
     private List<OrderLine> orderLines = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "smallint")
     private OrderStatus status = OrderStatus.NEW;
 
     @OneToOne

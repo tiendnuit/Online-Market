@@ -61,7 +61,7 @@
                         </div>
                         <div class="card-footer">
                             <small class="text-muted float-sm-left">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                            <a href="/buyer/home" class="float-sm-right"><img width="40px" height="40px" th:src="@{/images/icon-shopping-cart.jpg}" alt=""></a>
+                            <a href="#" th:id="${product.id}" class="float-sm-right btn-cart"><img th:id="${product.id}" width="40px" height="40px" th:src="@{/images/icon-shopping-cart.jpg}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -89,6 +89,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
+<script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </body>
 
 </html>
