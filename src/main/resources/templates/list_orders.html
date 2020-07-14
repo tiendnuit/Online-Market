@@ -26,7 +26,7 @@
 <br />
 <br />
 <div class="container">
-    <h3> Followings </h3>
+    <h3> Order History </h3>
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -45,7 +45,7 @@
             <td th:text="${order.status}">Paid</td>
             <td th:text="${order.total}">100</td>
             <td class="text-right d-none d-md-block">
-                <a class="btn btn-sm btn-outline-danger btn-unfollow" href="#" th:id="${order.id}">Print</a>
+                <a class="btn btn-sm btn-outline-danger" href="#" th:id="${order.id}" th:href="@{/buyer/order/pdf/{id}(id=${order.id})}" >Print</a>
             </td>
         </tr>
         </tbody>
