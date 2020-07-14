@@ -34,10 +34,10 @@ public class Order implements Serializable {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderLine> orderLines = new ArrayList<>();
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "smallint")
     private OrderStatus status = OrderStatus.NEW;
 
