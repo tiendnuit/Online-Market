@@ -24,7 +24,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderByBuyerId(Long id) {
-        return orderRepository.findByBuyerId(id).orElse(null);
+//        return orderRepository.findByBuyerId(id).orElse(null);
+        List<Order> orders = orderRepository.findAllByBuyerId(id);
+        if (orders.isEmpty()) {
+            return new Order();
+        } else {
+            return orders.get(orders.size() - 1);
+        }
     }
 
     @Override

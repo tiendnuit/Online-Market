@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Order completed</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Online</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="css/shop.css" rel="stylesheet">
 </head>
+
 <body>
-    <p>Order completed!</p>
-    <p>You earned [[${point}]] reward points</p>
-    <p><a href="#" th:href="@{/shop}">Continue shopping</a></p>
+
+<div th:replace="fragments/shop_header :: header">...</div>
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+    <h3>Order completed!</h3>
+    <h4>You earned [[${point}]] reward points</h4>
+    <h5><a href="#" th:href="@{/shop}">Continue shopping</a></h5>
+
+</div>
+
+
+
+<div layout:fragment="optional">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
+</div>
 </body>
 </html>
