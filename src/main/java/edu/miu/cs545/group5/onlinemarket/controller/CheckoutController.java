@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/buyer")
 public class CheckoutController {
     @Autowired
     private UserService userService;
@@ -40,18 +41,22 @@ public class CheckoutController {
 
     @PostMapping("/checkout")
     public String placeOrder(@ModelAttribute("order") @Valid Order order, BindingResult br, Model model) {
-        if (br.hasErrors()) {
-            return "checkout";
-        }
-
         User user = userService.getLoggedUser().get();
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
 
+        if (br.hasErrors()) {
+            model.addAttribute("shoppingCart", shoppingCart);
+            return "checkout";
+        }
+
         order.setBuyer((Buyer) user);
         order.setSeller(getSellerFromShoppingCart(shoppingCart));
-        order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines()));
+        order.setOrderLines(convertOrderLine(shoppingCart.getShoppingCartLines(), order));
 
         orderService.save(order);
+
+        shoppingCart.getShoppingCartLines().clear();
+        shoppingCartService.saveShoppingCart(shoppingCart);
 
         return "complete";
     }
@@ -61,10 +66,10 @@ public class CheckoutController {
         return shoppingCartLines.get(0).getProduct().getSeller();
     }
 
-    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines) {
+    public List<OrderLine> convertOrderLine(List<ShoppingCartLine> shoppingCartLines, Order order) {
         List<OrderLine> orderLines = new ArrayList<>();
         for (ShoppingCartLine line : shoppingCartLines) {
-            orderLines.add(new OrderLine(line.getProduct(), line.getQuantity()));
+            orderLines.add(new OrderLine(line.getProduct(), line.getQuantity(), order));
         }
         return orderLines;
     }

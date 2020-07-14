@@ -52,7 +52,7 @@
                 <div class="col-md-8 order-md-1">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/checkout}" th:object="${order}" method="post">
+                            <form th:action="@{/buyer/checkout}" th:object="${order}" method="post">
                                 <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
                                     <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
                                 </ul>
@@ -92,6 +92,8 @@
                             </form>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
