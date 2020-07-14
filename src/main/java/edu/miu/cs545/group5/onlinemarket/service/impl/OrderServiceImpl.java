@@ -47,5 +47,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.setFixedStatus(orderId,status);
     }
 
+    @Override
+    public Order getOrderById(Long id) {
+        return orderRepository.findById(id).orElse(null);
+    }
 
 }
