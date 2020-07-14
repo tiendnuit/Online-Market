@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class CheckoutController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    EmailService emailService;
 
     @GetMapping("/checkout")
     public String getCheckout(@ModelAttribute("order") Order order, Model model) {
@@ -105,7 +110,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/payment")
-    public String payOrder(@ModelAttribute("payment") @Valid Payment payment, BindingResult br, Model model) {
+    public String payOrder(@ModelAttribute("payment") @Valid Payment payment, BindingResult br, Model model) throws IOException, MessagingException {
         User user = userService.getLoggedUser().get();
         Order order = orderService.getOrderByBuyerId(user.getId());
 
@@ -128,6 +133,8 @@ public class CheckoutController {
         paymentService.save(payment);
 
 //        orderService.save(order);
+
+        emailService.sendPurchaseConfirmation(order);
 
         return "complete";
     }
