@@ -21,6 +21,8 @@ public class ProductReview implements Serializable {
     @OneToOne
     private Buyer buyer;
 
+    private Boolean approve = false;
+
     public ProductReview() {
     }
 
@@ -54,5 +56,13 @@ public class ProductReview implements Serializable {
 
     public void setBuyer(Buyer buyer) {
         this.buyer = buyer;
+    }
+
+    public Boolean getApprove() {
+        return approve;
+    }
+
+    public void setApprove(Boolean approve) {
+        this.approve = approve;
     }
 }

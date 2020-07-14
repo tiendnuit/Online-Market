@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<!-- Navigation -->
+<div th:replace="fragments/admin_header :: header">...</div>
+<br />
+<br />
+<br />
+<div class="container">
+    <h3> Product Reviews </h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product's ID</th>
+            <th scope="col">Product's Name</th>
+            <th scope="col">Buyer's ID</th>
+            <th scope="col">Buyer's Last Name</th>
+            <th scope="col">Buyer's First Name</th>
+            <th scope="col">Message</th>
+            <th scope="col">Approve</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="review, iter: ${reviews}">
+            <th scope="row" th:text="${iter.index + 1}" >1</th>
+            <!--/*@thymesVar id="firstName" type=""*/-->
+            <td th:text="${review.product.id}">ID</td>
+            <td th:text="${review.product.name}">Name</td>
+            <td th:text="${review.buyer.id}">ID</td>
+            <td th:text="${review.buyer.lastName}">Last Name</td>
+            <td th:text="${review.buyer.firstName}" >First Name</td>
+            <td th:text="${review.message}">Message</td>
+            <td>
+                <a href="#" th:id="${review.id}" class="btn btn-danger btn-approve" >Approve</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+<script type="text/javascript" th:src="@{/js/admin.js}"></script>
+</body>
+</html>
