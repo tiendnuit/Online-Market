@@ -11,14 +11,9 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(@Param("email") String email);
-
     Optional<User> findById(Long id);
-
     @Query("select u from User u where u.role <> 'ADMIN' ")
     List<User> findAllUserSellersAndBuyers();
-
     @Query("select a from User a where  a.role = 'SELLER'")
     public List<Seller> findAllSellers();
-
-
 }

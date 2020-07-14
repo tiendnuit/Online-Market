@@ -17,6 +17,7 @@ public interface SellerService {
     public Seller findById(Long id);
     public List<Seller> findAllSeller();
     public void approveSeller(Long id);
+    public void activateSeller(Long id);
 
 
 }

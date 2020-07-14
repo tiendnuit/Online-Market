@@ -14,16 +14,14 @@ public interface UserService {
 
     void save(User user);
     void create(User user);
-    public void approveBuyer(Long id);
     List<User> findAllUserSellersAndBuyers();
-    public void enableUser(Long id);
     public List<Seller> findAllSellers();
-    public void disAbleUser(Long id);
-    List<? extends User> getNotApprovedUsers();
     void delete(String id);
     List<Seller> getAllSellers();
     Optional<User> getLoggedUser();
     public void approveSeller(Long id);
+    public void activateSeller(Long id);
+    public void activateBuyer(Long id);
 
 
 }
