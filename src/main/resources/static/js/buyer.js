@@ -23,8 +23,6 @@
             $.ajax ({
                 url: '/buyer/unfollow/'+id,
                 type: "PUT",
-                dataType: "json",
-                contentType: "application/json",
                 success: (data) => {
                     console.log("ajax: " + data);
                     location.reload();
@@ -41,8 +39,6 @@
             $.ajax ({
                 url: '/buyer/follow/'+id,
                 type: "PUT",
-                dataType: "json",
-                contentType: "application/json",
                 success: (data) => {
                     console.log("ajax: " + data);
                     location.reload();

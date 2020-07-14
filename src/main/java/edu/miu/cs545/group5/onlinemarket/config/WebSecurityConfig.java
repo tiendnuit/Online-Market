@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
@@ -49,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String[] lists = {
                 "/login", "/registration",
-                "/shop"
+                "/shop/**"
                 };
         http.csrf().disable()
                 .authorizeRequests()

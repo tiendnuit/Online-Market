@@ -23,6 +23,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order getOrderByBuyerId(Long id) {
+        return orderRepository.findByBuyerId(id).orElse(null);
+    }
+
+    @Override
+    public List<Order> getOrderHistoryByBuyerId(Long id) {
+        return orderRepository.findAllByBuyerId(id);
+    }
+
+    @Override
     public Page<Order> findPageableOrderBySellerId(Pageable pageable, Long id) {
         return orderRepository.findBySellerId(pageable,id);
     }

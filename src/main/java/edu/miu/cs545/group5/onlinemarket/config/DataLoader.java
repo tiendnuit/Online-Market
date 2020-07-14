@@ -62,7 +62,7 @@ public class DataLoader implements ApplicationRunner {
         Buyer buyer1 = new Buyer("Tien", "Doan",
                 "buyer@gmail.com", "333-444-5555",
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_BUYER, 1, 0, Arrays.asList(seller1, seller3));
+                address, Constants.ROLE_BUYER, 1, 100, Arrays.asList(seller1, seller3));
 
         Buyer buyer2 = new Buyer("Robel", "Teferi",
                 "RobelBuyer@gmail.com", "123-444-5234",
@@ -79,8 +79,13 @@ public class DataLoader implements ApplicationRunner {
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
                 address, Constants.ROLE_BUYER, 0, 0, Arrays.asList(seller1, seller3));
 
+        Buyer buyer5 = new Buyer("Phan Anh", "Nguyen",
+                "anhnguyenict@gmail.com", "333-444-5555",
+                LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
+                address, Constants.ROLE_BUYER, 1, 300, Arrays.asList(seller1, seller3));
+
         userRepository.saveAll(Arrays.asList(admin, seller1, seller2, seller3, seller4));
-        userRepository.saveAll(Arrays.asList(buyer1, buyer2, buyer3));
+        userRepository.saveAll(Arrays.asList(buyer1, buyer2, buyer3, buyer5));
 
         //Category
         Category computer = new Category("Computer", "This is Computer category");

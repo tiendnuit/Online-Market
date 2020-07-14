@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getById(long id) {
-        return Optional.empty();
+        return userRepository.findById(id);
     }
 
     @Override

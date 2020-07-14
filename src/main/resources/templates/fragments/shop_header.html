@@ -10,7 +10,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="header">
     <div class="container">
-        <a class="navbar-brand" href="#">Shop Online</a>
+        <a class="navbar-brand" href="#" th:href="@{/shop}">Shop Online</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,14 +27,26 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                    <a class="nav-link" href="/buyer/followings">Followings</a>
+                </li>
+                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                    <a class="nav-link" href="/buyer/orders">Orders History</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item active" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
                 </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <li class="nav-item active" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/login}">Sign In</a>
+                </li>
+                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                    <a class="nav-link" href="#" th:href="@{/buyer/cart}">
+                        <img width="30px" height="30px" th:src="@{/images/icon-shopping-cart.jpg}" alt="">
+                        <span style="font-size:large; color:red" id="cart-item-count"></span>
+                    </a>
                 </li>
             </ul>
         </div>

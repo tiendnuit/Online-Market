@@ -4,7 +4,6 @@ import edu.miu.cs545.group5.onlinemarket.domain.Mail;
 import edu.miu.cs545.group5.onlinemarket.domain.Order;
 import edu.miu.cs545.group5.onlinemarket.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -43,11 +42,11 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendPurchaseConfirmation(Order order) throws MessagingException, IOException {
         Mail mail = new Mail();
-        mail.setMailTo("---");  //should replace by buyer email
+        mail.setMailTo(order.getBuyer().getEmail());  //should replace by buyer email
         mail.setSubject("Order Confirmation #" + order.getId());
 
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", "---");  // Should fill name of buyer
+        model.put("name", order.getBuyer().getLastName() +" "+ order.getBuyer().getFirstName());  // Should fill name of buyer
         model.put("orderId", order.getId());
         model.put("sign", "WAA - Group 5");
         mail.setProps(model);
