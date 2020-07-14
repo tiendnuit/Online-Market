@@ -42,7 +42,6 @@ public class AdminController {
     @GetMapping("{tab}")
     public String tab(@PathVariable String tab,Model model) {
 
-
         if(tab.equals("tab1")){
             List<Buyer> buyers = buyerService.findAllBuyers() ;
             model.addAttribute("buyers", buyers);
@@ -53,49 +52,26 @@ public class AdminController {
             return "_tab2";
         }
     }
-
-
-
-
-    public List<? extends User> notActiveUsers(Model model) {
-        return userService.getNotApprovedUsers();
-
-    }
-         public void updateUser(Long id){
-
-        User user = userService.getById(id).get();
-
-        if(user.getRole().toUpperCase().equals("SELLER")){
-            ((Seller)user).setApproved(true);
-
-        }
-        if(user.getRole().toUpperCase().equals(("BUYER"))){
-            ((Buyer)user).setApproved(true);
-
-        }
-        userService.save(user);
-    }
-
-
         @RequestMapping("/enableUser/{userId}")
         public String enableUser(@PathVariable("userId") Long id){
-            userService.enableUser(id);
-            return "redirect:/admin/#tab1";
+            userService.activateSeller(id);
+            return "admin";
             //return "_tab2";
         }
-//    @RequestMapping("/allUsers")
-//        public String getAllUsersExceptAdmin(Model model){
-//            List<User> users = userService.findAllUserSellersAndBuyers();
-//            model.addAttribute("users", users);
-//            return "_tab1";
-//    }
 
 
     @RequestMapping("/approveUser/{userId}")
-    public String approveSeller(@PathVariable("userId") Long id, Model model){
+    public String approveSeller(@PathVariable("userId") Long id){
             userService.approveSeller(id);
         return "admin";
     }
+
+    @RequestMapping("/approveBuyer/{userId}")
+    public String activateBuyer(@PathVariable("userId") Long id){
+        userService.activateBuyer(id);
+        return "admin";
+    }
+
 
 
 

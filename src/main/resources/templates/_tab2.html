@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h3> Seller</h3>
+<h3> SELLERS PAGE </h3>
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -44,10 +44,16 @@
         <td th:text="${user.address.zipCode}">ZipCode</td>
 
         <td th:if="${user.active}==1">
-            <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-success">Enabled</a>
+            <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-success">Active</a>
         </td>
         <td th:unless="${user.active}">
-            <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-danger">Disabled</a>
+            <a th:href="@{/admin/enableUser/{userId}(userId=${user.id})}"   class="btn btn-danger">Inactive</a>
+        </td>
+        <td th:if="${user.approved}==false">
+            <a th:href="@{/admin/approveUser/{userId}(userId=${user.id})}"   class="btn btn-success">Approve</a>
+        </td>
+        <td th:if="${user.approved}==true">
+            <a th:href="@{/admin/approveUser/{userId}(userId=${user.id})}"   class="btn btn-danger">Disapprove</a>
         </td>
 
     </tr>

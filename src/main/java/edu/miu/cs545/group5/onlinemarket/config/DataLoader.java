@@ -53,17 +53,34 @@ public class DataLoader implements ApplicationRunner {
         Seller seller3 = new Seller("Best Buy", "Best Buy",
                 "bestbuy@gmail.com", "333-444-5555",
                 LocalDate.parse("1995-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_SELLER, 1, false);
+                address, Constants.ROLE_SELLER, 1, true);
         Seller seller4 = new Seller("Apple", "Apple",
                 "apple@gmail.com", "333-444-5555",
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_SELLER, 1, false);
+                address, Constants.ROLE_SELLER, 1, true);
 
         Buyer buyer1 = new Buyer("Tien", "Doan",
                 "buyer@gmail.com", "333-444-5555",
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
                 address, Constants.ROLE_BUYER, 1, 0, Arrays.asList(seller1, seller3));
-        userRepository.saveAll(Arrays.asList(admin, seller1, seller2, seller3, seller4, buyer1));
+
+        Buyer buyer2 = new Buyer("Robel", "Teferi",
+                "RobelBuyer@gmail.com", "123-444-5234",
+                LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
+                address, Constants.ROLE_BUYER, 0, 0, Arrays.asList(seller1, seller3));
+
+        Buyer buyer3 = new Buyer("Wondyefraw", "Abby",
+                "WondyBbuyer@gmail.com", "124-444-5555",
+                LocalDate.parse("2013-10-27"), passwordEncoder.encode("123456"),
+                address, Constants.ROLE_BUYER, 1, 0, Arrays.asList(seller1, seller3));
+
+        Buyer buyer4 = new Buyer("The Yen Nougen", "Doan",
+                "ThyenByer@gmail.com", "333-444-5555",
+                LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
+                address, Constants.ROLE_BUYER, 0, 0, Arrays.asList(seller1, seller3));
+
+        userRepository.saveAll(Arrays.asList(admin, seller1, seller2, seller3, seller4));
+        userRepository.saveAll(Arrays.asList(buyer1, buyer2, buyer3));
 
         //Category
         Category computer = new Category("Computer", "This is Computer category");
