@@ -19,16 +19,13 @@ public class CheckoutController {
     private UserService userService;
 
     @Autowired
-    private ProductService productService;
-
-    @Autowired
     private ShoppingCartService shoppingCartService;
 
     @Autowired
-    private ShoppingCartLineService shoppingCartLineService;
+    private OrderService orderService;
 
     @Autowired
-    private OrderService orderService;
+    private PaymentService paymentService;
 
     @GetMapping("/checkout")
     public String getCheckout(@ModelAttribute("order") Order order, Model model) {
@@ -57,6 +54,35 @@ public class CheckoutController {
 
         shoppingCart.getShoppingCartLines().clear();
         shoppingCartService.saveShoppingCart(shoppingCart);
+
+        return "redirect:payment";
+    }
+
+    @GetMapping("/payment")
+    public String getPayment(@ModelAttribute("payment") Payment payment, Model model) {
+        User user = userService.getLoggedUser().get();
+        Order order = orderService.getOrderByBuyerId(user.getId());
+        model.addAttribute("order", order);
+
+        return "payment";
+    }
+
+    @PostMapping("/payment")
+    public String payOrder(@ModelAttribute("payment") @Valid Payment payment, BindingResult br, Model model) {
+        User user = userService.getLoggedUser().get();
+        Order order = orderService.getOrderByBuyerId(user.getId());
+
+        if (br.hasErrors()) {
+            model.addAttribute("order", order);
+            return "payment";
+        }
+
+        order.setPayment(payment);
+
+        payment.setBuyer((Buyer) user);
+        paymentService.save(payment);
+
+//        orderService.save(order);
 
         return "complete";
     }

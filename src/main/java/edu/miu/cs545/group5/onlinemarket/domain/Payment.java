@@ -22,13 +22,13 @@ public class Payment implements Serializable {
     @Size(min = 2, max = 100, message = "Card holder name length is 2-100 characters")
     private String cardName;
 
-    @CreditCardNumber(message = "Invalid card number. Eg. 4111111111111111")
+    @CreditCardNumber(message = "Invalid card number. Eg. 1111222233334444")
     private String cardNumber;
 
-    @Pattern(regexp = "^[0-9]{2}\\/[0-9]{4}$", message = "Invalid format expiration. Eg 11/2030")
+    @Pattern(regexp = "^[0-9]{2}\\/[0-9]{4}$", message = "Invalid format expiration. Eg 10/2022")
     private String expiration;
 
-    @Pattern(regexp = "^[0-9]{3}$", message = "Invalid format CVV. Eg 097")
+    @Pattern(regexp = "^[0-9]{3}$", message = "Invalid format CVV. Eg 123")
     private String cvv;
 
     @ManyToOne

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Payment page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Payment</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div id="miniCart" class="col-md-4 order-md-2 mb-4" >
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Order</span>
+                                <span class="badge badge-secondary badge-pill" th:text="${#lists.size(order.orderLines)}">0</span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between lh-condensed"
+                                    th:each="item : ${order.orderLines}">
+                                    <div>
+                                        <h6 class="my-0" th:text="${item.product.name}">Product name</h6>
+                                        <small class="text-muted">$[[${#numbers.formatDecimal(item.product.price,1,2)}]]</small>
+                                    </div>
+                                    <span class="text-muted">X</span>
+                                    <span class="text-muted" th:text="${item.quantity}"></span>
+                                    <span class="text-muted">$[[${#numbers.formatDecimal(item.totalPrice,1,2)}]]</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total (USD)</span>
+                                    <strong>$[[${#numbers.formatDecimal(order.totalPrice,1,2)}]]</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 order-md-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/buyer/payment}" th:object="${payment}" method="post">
+                                <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                                    <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+                                </ul>
+                            <div class="form-group">
+                                <label class="col-form-label">Card name</label>
+                                <input type="text" class="form-control" placeholder="Phan Anh Nguyen"
+                                       th:field="*{cardName}"
+                                       th:classappend="${#fields.hasErrors('cardName')}? 'is-invalid'"/>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label class="col-form-label">Card number</label>
+                                    <input type="text" class="form-control" placeholder="1111222233334444"
+                                           th:field="*{cardNumber}"
+                                           th:classappend="${#fields.hasErrors('cardNumber')}? 'is-invalid'"/>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="col-form-label">Expiration</label>
+                                    <input type="text" class="form-control" placeholder="10/2022"
+                                           th:field="*{expiration}"
+                                           th:classappend="${#fields.hasErrors('expiration')}? 'is-invalid'"/>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label class="col-form-label">CVV</label>
+                                    <input type="text" class="form-control" placeholder="123"
+                                           th:field="*{cvv}"
+                                           th:classappend="${#fields.hasErrors('cvv')}? 'is-invalid'"/>
+                                </div>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="billing-info" name="sameBilling" checked>
+                                <label class="custom-control-label" for="billing-info">Set as default payment</label>
+                            </div>
+                                <button class="btn btn-outline-primary mt-3">Pay</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div layout:fragment="optional">
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
+</div>
+
+</body>
+</html>
