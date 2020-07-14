@@ -41,8 +41,16 @@
                                 </li>
 
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Total (USD)</span>
+                                    <span>Total Price (USD)</span>
                                     <strong>$[[${#numbers.formatDecimal(order.totalPrice,1,2)}]]</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Reward Point</span>
+                                    <strong>- [[${#numbers.formatDecimal(usedPoint,1,2)}]]</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total Payment (USD)</span>
+                                    <strong>$[[${#numbers.formatDecimal(order.total,1,2)}]]</strong>
                                 </li>
                             </ul>
                         </div>

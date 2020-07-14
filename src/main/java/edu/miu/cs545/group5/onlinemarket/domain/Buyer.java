@@ -15,7 +15,7 @@ import java.util.List;
 @Getter @Setter
 @DiscriminatorValue("buyer")
 public class Buyer extends User {
-    private int point = 0;
+    private double point = 0;
     private boolean approved = false;
 
     @ManyToMany
@@ -42,11 +42,9 @@ public class Buyer extends User {
         this.shoppingCart = new ShoppingCart();
     }
 
-    public int getPoint() {
-        return point;
-    }
+    public double getPoint() { return point; }
 
-    public void setPoint(int point) {
+    public void setPoint(double point) {
         this.point = point;
     }
 

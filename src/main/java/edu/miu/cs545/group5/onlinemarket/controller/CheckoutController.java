@@ -33,6 +33,23 @@ public class CheckoutController {
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByBuyerId(user.getId());
         model.addAttribute("shoppingCart", shoppingCart);
 
+        double total;
+        double remainingPoint;
+        double usedPoint;
+        double totalPrice = shoppingCart.getTotalPrice();
+        double point = ((Buyer) user).getPoint();
+        if (totalPrice > point) {
+            total = totalPrice - point;
+            remainingPoint = 0;
+            usedPoint = point;
+        } else {
+            total = 0;
+            remainingPoint = point - totalPrice;
+            usedPoint = totalPrice;
+        }
+        model.addAttribute("usedPoint", usedPoint);
+        model.addAttribute("total", total);
+
         return "checkout";
     }
 
@@ -45,6 +62,24 @@ public class CheckoutController {
             model.addAttribute("shoppingCart", shoppingCart);
             return "checkout";
         }
+
+        double total;
+        double remainingPoint;
+        double usedPoint;
+        double totalPrice = shoppingCart.getTotalPrice();
+        double point = ((Buyer) user).getPoint();
+        if (totalPrice > point) {
+            total = totalPrice - point;
+            remainingPoint = 0;
+            usedPoint = point;
+        } else {
+            total = 0;
+            remainingPoint = point - totalPrice;
+            usedPoint = totalPrice;
+        }
+        model.addAttribute("usedPoint", usedPoint);
+        ((Buyer) user).setPoint(remainingPoint);
+        order.setTotal(total);
 
         order.setBuyer((Buyer) user);
         order.setSeller(getSellerFromShoppingCart(shoppingCart));
@@ -64,6 +99,8 @@ public class CheckoutController {
         Order order = orderService.getOrderByBuyerId(user.getId());
         model.addAttribute("order", order);
 
+        model.addAttribute("usedPoint", order.getTotalPrice() - order.getTotal());
+
         return "payment";
     }
 
@@ -76,6 +113,13 @@ public class CheckoutController {
             model.addAttribute("order", order);
             return "payment";
         }
+
+        Buyer buyer = (Buyer) user;
+        double point = buyer.getPoint();
+        double total = order.getTotal();
+        point += total * 0.02;
+        buyer.setPoint(point);
+        model.addAttribute("point", total * 0.02);
 
         order.setPayment(payment);
         order.setStatus(OrderStatus.PAID);
