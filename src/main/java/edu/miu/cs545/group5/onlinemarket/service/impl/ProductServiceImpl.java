@@ -28,20 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll() {
-        List<Product> products = productRepository.findAll();
-        Optional<User> currentUser = userService.getLoggedUser();
-        if (currentUser.isPresent() && currentUser.get().getRole().equals(Constants.ROLE_BUYER)){
-            Buyer buyer = (Buyer) currentUser.get();
-            for (Product p : products) {
-                if (buyer.getFollowings().contains(p.getSeller())) {
-                    p.getSeller().setFollowingByCurrentUser(true);
-                } else {
-                    p.getSeller().setFollowingByCurrentUser(false);
-                }
-            }
-        }
-
-        return products;
+        return productRepository.findAll();
     }
 
     @Override

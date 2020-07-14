@@ -27,11 +27,11 @@
                 contentType: "application/json",
                 success: (data) => {
                     console.log("ajax: " + data);
-                    location.reload();
+                    //location.reload();
                 },
                 error: (error) => {
                     console.log("Error: " + error);
-                    location.reload();
+                    //location.reload();
                 }
             });
         },
@@ -45,11 +45,11 @@
                 contentType: "application/json",
                 success: (data) => {
                     console.log("ajax: " + data);
-                    location.reload();
+                    //location.reload();
                 },
                 error: (error) => {
                     console.log("Error: " + error);
-                    location.reload();
+                    //location.reload();
                 }
             });
         }
