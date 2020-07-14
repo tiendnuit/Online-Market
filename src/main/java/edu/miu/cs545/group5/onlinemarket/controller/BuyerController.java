@@ -1,5 +1,6 @@
 package edu.miu.cs545.group5.onlinemarket.controller;
 
+import edu.miu.cs545.group5.onlinemarket.config.PdfUtil;
 import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
 import edu.miu.cs545.group5.onlinemarket.domain.Order;
 import edu.miu.cs545.group5.onlinemarket.service.BuyerService;
@@ -7,12 +8,16 @@ import edu.miu.cs545.group5.onlinemarket.service.EmailService;
 import edu.miu.cs545.group5.onlinemarket.service.OrderService;
 import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sun.security.provider.certpath.OCSPResponse;
 
 import javax.mail.MessagingException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,5 +83,21 @@ public class BuyerController {
                                 Model model) {
         buyerService.reviewProduct(id, message);
         return "status: successful";
+    }
+
+    @GetMapping(value = {"/order/pdf/{id}"}, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> printOrder(@PathVariable("id") Long id) {
+        Order order = orderService.getOrderById(id);
+
+        ByteArrayInputStream bis = PdfUtil.orderReport(order);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=order.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
 }
