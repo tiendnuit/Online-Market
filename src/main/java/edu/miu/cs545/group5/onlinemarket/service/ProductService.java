@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
+    List<Product> findAll();
     public Product saveProduct(Product product);
     public Page<Product> getPaginatedProduct(Pageable pageable);
     public Product findProductById(Long id);

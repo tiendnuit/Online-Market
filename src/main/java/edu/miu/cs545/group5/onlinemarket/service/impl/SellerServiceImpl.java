@@ -38,17 +38,16 @@ public class SellerServiceImpl implements SellerService {
         sellerRepository.save(seller);
     }
 
-//    @Override
-//    public List<SellerResponse> getAllSellersNotApproved() {
-//        List<Seller> unapprovedSellerList = sellerRepository.findSellersByApprovedFalse();
-//            return unapprovedSellerList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
-//    }
-//    @Override
-//    public List<SellerResponse> getAllApprovedSellers(){
-//        List<Seller> approvedSellersList = sellerRepository.findAllByApprovedTrue();
-//        return approvedSellersList.stream().map(SellerMapper::mapToSellerResponse).collect(Collectors.toList());
-//    }
-
+    public void activateSeller(Long id){
+        Seller seller = sellerRepository.findById(id).get();
+        if(seller.getActive()==1){
+            seller.setActive(0);
+        }
+        else{
+            seller.setActive(1);
+        }
+        sellerRepository.save(seller);
+    }
     @Override
     public Optional<Seller> getSellerById(Long id) {
         return sellerRepository.findById(id);

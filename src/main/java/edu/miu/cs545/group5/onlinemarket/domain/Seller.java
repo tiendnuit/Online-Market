@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -42,5 +43,16 @@ public class Seller extends User {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    @Transient
+    private Boolean isFollowingByCurrentUser = false;
+
+    public Boolean getFollowingByCurrentUser() {
+        return isFollowingByCurrentUser;
+    }
+
+    public void setFollowingByCurrentUser(Boolean followingByCurrentUser) {
+        isFollowingByCurrentUser = followingByCurrentUser;
     }
 }

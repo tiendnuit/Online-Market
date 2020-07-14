@@ -2,6 +2,7 @@ package edu.miu.cs545.group5.onlinemarket.service.impl;
 
 import edu.miu.cs545.group5.onlinemarket.domain.Buyer;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
+import edu.miu.cs545.group5.onlinemarket.domain.User;
 import edu.miu.cs545.group5.onlinemarket.repository.BuyerRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
 import edu.miu.cs545.group5.onlinemarket.service.BuyerService;
@@ -50,4 +51,5 @@ public class BuyerServiceImpl implements BuyerService {
     public List<Buyer> findAllBuyers(){
         return  buyerRepository.findAllBuyers();
     }
+
 }

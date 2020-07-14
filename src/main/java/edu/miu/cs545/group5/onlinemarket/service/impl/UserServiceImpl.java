@@ -75,33 +75,9 @@ public class UserServiceImpl implements UserService {
         newUser.setActive(1);
         userRepository.save(newUser);
     }
-
-    @Override
-    public void approveBuyer(Long id) {
-        //not implemented
-    }
-
     @Override
     public List<User> findAllUserSellersAndBuyers() {
         return userRepository.findAllUserSellersAndBuyers();
-    }
-
-
-
-
-    public void enableUser(Long id){
-            User user = userRepository.findById(id).get();
-
-            if(user.getActive()==1){
-                user.setActive(0);
-            }
-            else {
-                user.setActive(1);
-            }
-        Seller seller = (Seller) user;
-        seller.setApproved(true);
-        userRepository.save(seller);
-
     }
 
     @Override
@@ -109,11 +85,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllSellers();
     }
 
-
-    @Override
-    public void disAbleUser(Long id) {
-
-    }
     @Override
     public void approveSeller(Long id) {
         User user = userRepository.findById(id).get();
@@ -125,18 +96,35 @@ public class UserServiceImpl implements UserService {
             userRepository.save(seller);
         }
     }
-
+    @Override
+    public void activateSeller(Long id) {
+        User user = userRepository.findById(id).get();
+        Seller  seller = (Seller) user;
+        if(user.getActive()==1){
+            seller.setActive(0);
+        }
+            else{
+                seller.setActive(1);
+            }
+            userRepository.save(seller);
+        }
 
     @Override
-    public List<? extends User> getNotApprovedUsers() {
-        return sellerRepository.findSellersByApprovedFalse();
+    public void activateBuyer(Long id) {
+        User user = userRepository.findById(id).get();
+        Buyer  buyer = (Buyer) user;
+        if(user.getActive()==1){
+            buyer.setActive(0);
+        }
+        else{
+            buyer.setActive(1);
+        }
+        userRepository.save(buyer);
     }
-
     @Override
     public void delete(String id) {
 
     }
-
     @Override
     public List<Seller> getAllSellers() {
         return userRepository.findAllSellers();
@@ -151,10 +139,6 @@ public class UserServiceImpl implements UserService {
             String email = ((UserDetails) principal).getUsername();
             return userRepository.findByEmail(email);
         }
-        return null;
+        return Optional.empty();
     }
-
-
-
-
 }

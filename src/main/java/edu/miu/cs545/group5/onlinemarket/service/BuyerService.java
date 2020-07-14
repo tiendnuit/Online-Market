@@ -8,4 +8,6 @@ public interface BuyerService {
     void unfollowSeller(Long id);
     void followSeller(Long id);
     public List<Buyer> findAllBuyers();
+
+
 }

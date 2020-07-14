@@ -38,7 +38,7 @@ public class HomeController {
         if (hasRole(Constants.ROLE_SELLER)) {
             return "redirect:/seller/sellerDashboard";
         } else if (hasRole(Constants.ROLE_BUYER)) {
-            return "redirect:/buyer/home";
+            return "redirect:/shop";
         } else if (hasRole(Constants.ROLE_ADMIN)) {
             return "redirect:/admin";
         }
