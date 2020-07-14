@@ -46,6 +46,8 @@ public class Order implements Serializable {
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
+    private double total;
+
     @Transient
     public Double getTotalPrice() {
         double sum = 0D;

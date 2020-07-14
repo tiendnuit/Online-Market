@@ -62,7 +62,7 @@ public class DataLoader implements ApplicationRunner {
         Buyer buyer1 = new Buyer("Tien", "Doan",
                 "buyer@gmail.com", "333-444-5555",
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
-                address, Constants.ROLE_BUYER, 1, 0, Arrays.asList(seller1, seller3));
+                address, Constants.ROLE_BUYER, 1, 100, Arrays.asList(seller1, seller3));
 
         Buyer buyer2 = new Buyer("Robel", "Teferi",
                 "RobelBuyer@gmail.com", "123-444-5234",
