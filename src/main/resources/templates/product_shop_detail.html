@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template -->
     <link href="css/shop-detail.css" rel="stylesheet">
-
+    <link href="css/shop.css" rel="stylesheet">
 </head>
 
 <body>
@@ -43,8 +43,12 @@
                     <div>
                         <span th:text="${product.seller.firstName}"></span>
                         <div sec:authorize="hasAuthority('BUYER')">
-                            <button th:if="${product.seller.followingByCurrentUser} == true" th:id="${product.seller.id}" class="like btn btn-danger btn-unfollow" type="button"><span class="fa fa-heart"></span></button>
-                            <button th:if="${product.seller.followingByCurrentUser} == false" th:id="${product.seller.id}" class="like btn btn-dark btn-follow" type="button"><span class="fa fa-heart"></span></button>
+<!--                            <button th:if="${product.seller.followingByCurrentUser} == true" th:id="${product.seller.id}" class="like btn btn-danger btn-unfollow" type="button"></button>-->
+<!--                            <button th:if="${product.seller.followingByCurrentUser} == false" th:id="${product.seller.id}" class="like btn btn-dark btn-follow" type="button"></button>-->
+                            <td class="text-right d-none d-md-block">
+                                <a th:if="${product.seller.followingByCurrentUser} == true" class="btn btn-sm btn-danger btn-unfollow" href="#" th:id="${product.seller.id}"> <span class="fa fa-heart"></span></a>
+                                <a th:if="${product.seller.followingByCurrentUser} == false" class="btn btn-sm btn-dark btn-follow" href="#" th:id="${product.seller.id}"> <span class="fa fa-heart"></span></a>
+                            </td>
                         </div>
 
                     </div>

@@ -35,17 +35,19 @@ public class BuyerController {
     }
 
     @PutMapping(value = {"buyer/unfollow/{id}"})
-    @ResponseBody
-    public void unfollowSeller(@PathVariable("id") Long id, Model model) {
+    public @ResponseBody String unfollowSeller(@PathVariable("id") Long id, Model model) {
         System.out.println("unfollow: "+ id);
         buyerService.unfollowSeller(id);
+
+        return "id = " + id;
     }
 
     @PutMapping(value = {"buyer/follow/{id}"})
-    @ResponseBody
-    public void followSeller(@PathVariable("id") Long id, Model model) {
+    public @ResponseBody String followSeller(@PathVariable("id") Long id, Model model) {
         System.out.println("follow: "+ id);
         buyerService.followSeller(id);
+
+        return "id = " + id;
     }
 
     @GetMapping(value = {"buyer/sendEmail"})

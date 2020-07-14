@@ -27,16 +27,19 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                    <a class="nav-link" href="/buyer/followings">Followings</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item active" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
                 </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <li class="nav-item active" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/login}">Sign In</a>
                 </li>
-                <li class="nav-item" sec:authorize="hasAuthority('BUYER')">
+                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
                     <a class="nav-link" href="#" th:href="@{/buyer/cart}">
                         <img width="30px" height="30px" th:src="@{/images/icon-shopping-cart.jpg}" alt="">
                         <span style="font-size:large; color:red" id="cart-item-count"></span>
