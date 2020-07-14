@@ -3,8 +3,6 @@ package edu.miu.cs545.group5.onlinemarket.controller;
 import edu.miu.cs545.group5.onlinemarket.config.ImageUtil;
 import edu.miu.cs545.group5.onlinemarket.config.OrderMapper;
 import edu.miu.cs545.group5.onlinemarket.domain.Order;
-import edu.miu.cs545.group5.onlinemarket.domain.OrderLine;
-import edu.miu.cs545.group5.onlinemarket.domain.Product;
 import edu.miu.cs545.group5.onlinemarket.domain.Seller;
 import edu.miu.cs545.group5.onlinemarket.domain.pojo.OrderPOJO;
 import edu.miu.cs545.group5.onlinemarket.service.OrderService;
@@ -66,7 +64,7 @@ public class OrderController {
 
     @RequestMapping("/changeStatus/{orderId}/{status}")
     public String changeOrderStatus(@PathVariable("orderId")Long orderId, @PathVariable("status") String status){
-        orderService.updateOrderStatusBuOrderId(orderId,status);
+        orderService.updateOrderStatusByOrderId(orderId,status);
         return "manageOrder";
     }
 

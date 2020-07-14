@@ -24,10 +24,8 @@
           <span th:each="product : ${productList}" clas="card">
                   <td>
             <span class="card" style="width: 18rem;">
-                <!--<img th:src="@{/images/b84bc0b0-dfc9-41c7-bdb8-b577c5ffed64.png}" class="image-style">-->
                 <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(product.getData())}" th:class="image-style"/>
                 <span class="card-body">
-                    <!--<h5 class="card-title">Card title</h5>-->
                     <p class="p-margin">Model:  <span th:text="${{product.name}}"/>Name</p>
                     <p class="p-margin">Price : $<span th:text="${{product.price}}"/>PRICE</p>
                     <p class="p-margin">Stock Qnt: <span th:text="${product.stock}"/>Stock</p>

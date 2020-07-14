@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int updateOrderStatusBuOrderId(Long orderId, String status) {
+    public int updateOrderStatusByOrderId(Long orderId, String status) {
         return orderRepository.setFixedStatus(orderId,status);
     }
 
