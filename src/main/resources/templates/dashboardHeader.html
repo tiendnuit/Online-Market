@@ -8,11 +8,11 @@
 
 <div th:fragment="dashboardHeaderBar">
 <header class="header-top navbar fixed-top">
-    <div class="navbar-header">
+    <div class="navbar-header bg-dark">
 
     </div>
 </header>
-<aside class="side-navigation-wrap sidebar-fixed">  <!-- START: Side Navigation -->
+<aside class="side-navigation-wrap sidebar-fixed bg-dark">  <!-- START: Side Navigation -->
     <div class="sidenav-inner">
 
         <ul>
@@ -20,7 +20,7 @@
                 <li class="has-submenu">
                     <a th:href="@{/seller/product/productList/1}">
                         <!--<a th:href="@{/product/productList/{productId}(productId=${pId})}"> -->
-                        <span class="nav-text">Manage Product</span>
+                        <span class="nav-text span-color">Manage Product</span>
                     </a>
                 </li>
             </div>
@@ -28,22 +28,22 @@
             <li th:if="${seller.approved}==true">
 
                 <a th:href="@{/seller/product/productAddForm}">
-                    <span class="nav-text">Add Product</span>
+                    <span class="nav-text span-color">Add Product</span>
                 </a>
             </li>
             <li>
                 <a th:href="@{/seller/order/orderList/1}">
-                    <span class="nav-text">Manage Orders</span>
+                    <span class="nav-text span-color">Manage Orders</span>
                 </a>
             </li>
             <li th:if="${seller.approved eq true}">
                 <a th:href="@{/category/categoryInputForm}">
-                    <span class="nav-text">Add Category</span>
+                    <span class="nav-text span-color">Add Category</span>
                 </a>
             </li>
             <li>
                 <a th:href="@{/logout}">
-                    <span class="nav-text">Logout</span>
+                    <span class="nav-text span-color">Logout</span>
                 </a>
             </li>
         </ul>

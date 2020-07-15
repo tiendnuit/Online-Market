@@ -45,6 +45,11 @@ select{
     color: green;
 }
 
+.td-style{
+    overflow: unset;
+    width: 20px !important;
+}
+
 .image-style{
     height: 200px !important;
 }
@@ -53,6 +58,9 @@ select{
 }
 .p-margin{
     margin-bottom: 0px;
+}
+.span-color{
+    color: white;
 }
 /**
 
