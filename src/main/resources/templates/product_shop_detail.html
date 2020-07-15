@@ -46,8 +46,9 @@
 <!--                            <button th:if="${product.seller.followingByCurrentUser} == true" th:id="${product.seller.id}" class="like btn btn-danger btn-unfollow" type="button"></button>-->
 <!--                            <button th:if="${product.seller.followingByCurrentUser} == false" th:id="${product.seller.id}" class="like btn btn-dark btn-follow" type="button"></button>-->
                             <td class="text-right d-none d-md-block">
-                                <a th:if="${product.seller.followingByCurrentUser} == true" class="btn btn-sm btn-danger btn-unfollow" href="#" th:id="${product.seller.id}"> <span class="fa fa-heart"></span></a>
-                                <a th:if="${product.seller.followingByCurrentUser} == false" class="btn btn-sm btn-dark btn-follow" href="#" th:id="${product.seller.id}"> <span class="fa fa-heart"></span></a>
+                                <a th:if="${product.seller.followingByCurrentUser} == true" class="btn btn-sm btn-danger btn-unfollow" href="#" th:id="${product.seller.id}"> Unfollow</span></a>
+                                <a th:if="${product.seller.followingByCurrentUser} == false" class="btn btn-sm btn-dark btn-follow" href="#" th:id="${product.seller.id}"> Follow</span></a>
+                                <!-- <span class="fa fa-heart">-->
                             </td>
                         </div>
 
@@ -60,15 +61,52 @@
                             <span class="fa fa-star text-warning"></span>
                             <span class="fa fa-star text-warning"></span>
                         </div>
-                        <span class="review-no">41 reviews</span>
+                        <small class="review-no text-muted">99 reviews</small>
                     </div>
-                    <p class="font-weight-light text-secondary" th:text="${product.category.categoryName}"></p>
-                    <p class="product-description" th:text="${product.description}"></p>
-                    <h4 class="price">Current price: <span class="text-danger" th:text="${'$' + product.price}">$</span></h4>
+                    <p class="font-weight-light text-info" th:text="${'Category: ' + product.category.categoryName}"></p>
+                    <div>
+                        <h6>Description: </h6>
+                        <p class="product-description p-3 bg-light" th:text="${product.description}"></p>
+                    </div>
+
+                    <h4 class="price text-dark">Price: <span class="text-danger" th:text="${'$' + product.price}">$</span></h4>
 
                     <div class="action" sec:authorize="hasAuthority('BUYER')">
-                        <button class="add-to-cart btn btn-success btn-follow" type="button">add to cart</button>
+                        <button th:id="${product.id}" class="add-to-cart btn btn-success btn-cart" type="button">add to cart</button>
+                        <button th:if="${product.currentUserReview} == null" type="button" class="btn btn-danger" data-toggle="modal" data-target="#form"> Review Product </button>
+                        <div class="mt-3" th:if="${product.currentUserReview} != null">
+                            <h6 class="text-secondary">Your review: <small class="text-muted text-" th:if="${product.currentUserReview.approve} == false"> (waiting approve)</small> </h6>
+                            <p class="bg-light text-muted p-3" th:text="${product.currentUserReview.message}"></p>
+                        </div>
 
+                        <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="text-right cross"> <i class="fa fa-times mr-2"></i> </div>
+                                    <div class="card-body text-center">
+                                        <img src="https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+                                        <div class="comment-box text-center">
+                                            <h4>Add a comment</h4>
+                                            <div class="rating">
+                                                <div class="rating mt-2">
+                                                    <div class="stars">
+                                                        <span class="fa fa-star checked text-warning"></span>
+                                                        <span class="fa fa-star checked text-warning"></span>
+                                                        <span class="fa fa-star checked text-warning"></span>
+                                                        <span class="fa fa-star text-warning"></span>
+                                                        <span class="fa fa-star text-warning"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="comment-area"> <textarea id="message-review" class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+                                                <div class="text-center mt-4">
+                                                    <button th:id="${product.id}" class="btn btn-success send px-5">Send message <i class="fa fa-long-arrow-right ml-1"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,8 +116,8 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
-
+<script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </body>
 </html>

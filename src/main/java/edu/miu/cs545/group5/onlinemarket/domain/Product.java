@@ -185,4 +185,24 @@ public class Product implements Serializable {
     public void setData(byte[] data) {
         this.data = data;
     }
+
+    @Transient
+    private ProductReview currentUserReview;
+
+    public ProductReview getCurrentUserReview() {
+        return currentUserReview;
+    }
+
+    public void setCurrentUserReview(ProductReview currentUserReview) {
+        this.currentUserReview = currentUserReview;
+    }
+
+    public void updateCurrentUserReviewIfNeeded(Long id) {
+        for (ProductReview review : reviews) {
+            if (review.getBuyer().getId() == id) {
+                this.setCurrentUserReview(review);
+                return;
+            }
+        }
+    }
 }

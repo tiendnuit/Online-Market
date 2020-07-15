@@ -14,7 +14,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <label class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="navbar-text text-info">Welcome <span sec:authentication="name"></span>,</a>
@@ -22,24 +22,24 @@
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="navbar-text text-info">Welcome Guest,</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item"th:classappend="${#httpServletRequest.getRequestURI() == '/shop' ? 'active':''}">
                     <a class="nav-link" href="#" th:href="@{/shop}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/buyer/followings' ? 'active':''}" sec:authorize="hasAuthority('BUYER')">
                     <a class="nav-link" href="/buyer/followings">Followings</a>
                 </li>
-                <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/buyer/orders' ? 'active':''}" sec:authorize="hasAuthority('BUYER')">
                     <a class="nav-link" href="/buyer/orders">Orders History</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/#' ? 'active':''}">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                <li class="nav-item active" sec:authorize="isAuthenticated()">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
                 </li>
-                <li class="nav-item active" sec:authorize="!isAuthenticated()">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" href="#" th:href="@{/login}">Sign In</a>
                 </li>
                 <li class="nav-item active" sec:authorize="hasAuthority('BUYER')">

@@ -13,11 +13,56 @@ public class ProductReview implements Serializable {
     private Long id;
 
     @Nullable
-    private String description;
+    private String message;
 
     @ManyToOne
     private Product product;
 
+    @OneToOne
+    private Buyer buyer;
 
+    private Boolean approve = false;
 
+    public ProductReview() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Buyer getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(Buyer buyer) {
+        this.buyer = buyer;
+    }
+
+    public Boolean getApprove() {
+        return approve;
+    }
+
+    public void setApprove(Boolean approve) {
+        this.approve = approve;
+    }
 }

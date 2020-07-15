@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="header">
+    <div class="container">
+        <a class="navbar-brand" href="#" th:href="@{/admin}">Adminstration Zone - Admin Control</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active':''}" href="#" th:href="@{/admin}">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/buyers' ? 'active':''}">
+                    <a class="nav-link" href="#" th:href="@{/admin/buyers}">Buyers</a>
+                </li>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/sellers' ? 'active':''}">
+                    <a class="nav-link" href="#" th:href="@{/admin/sellers}">Sellers</a>
+                </li>
+
+                <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/reviews' ? 'active':''}">
+                    <a class="nav-link" href="#" th:href="@{/admin/reviews}">Product Reviews</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

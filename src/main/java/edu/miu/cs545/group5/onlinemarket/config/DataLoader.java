@@ -84,8 +84,13 @@ public class DataLoader implements ApplicationRunner {
                 LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
                 address, Constants.ROLE_BUYER, 1, 300, Arrays.asList(seller1, seller3));
 
+        Buyer buyer6 = new Buyer("Tien", "Nguyen",
+                "tiendnuit@gmail.com", "333-444-5555",
+                LocalDate.parse("1976-10-27"), passwordEncoder.encode("123456"),
+                address, Constants.ROLE_BUYER, 1, 300, Arrays.asList(seller1, seller3));
+
         userRepository.saveAll(Arrays.asList(admin, seller1, seller2, seller3, seller4));
-        userRepository.saveAll(Arrays.asList(buyer1, buyer2, buyer3, buyer5));
+        userRepository.saveAll(Arrays.asList(buyer1, buyer2, buyer3, buyer5, buyer6));
 
         //Category
         Category computer = new Category("Computer", "This is Computer category");

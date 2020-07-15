@@ -41,7 +41,7 @@
                                 <tr th:each="item : ${shoppingCart.shoppingCartLines}">
                                     <td>
                                         <figure class="itemside align-items-center">
-                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-thumbnail"></div>
+                                            <div class="aside"><img th:src="@{/images/{pic}(pic=${item.product.imageName})}" class="img-thumbnail" width="200px" height="200px"></div>
                                             <figcaption class="info">
                                                 <a href="#" th:href="@{/product-detail(pid=${item.product.id})}" class="title text-dark" th:text="${item.product.name}">Camera Canon EOS M50 Kit</a>
                                             </figcaption>
