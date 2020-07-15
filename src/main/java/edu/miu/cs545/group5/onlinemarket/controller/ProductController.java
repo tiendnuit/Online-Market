@@ -58,7 +58,7 @@ public class ProductController {
     @PostMapping("/addProduct")
     public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Seller seller = (Seller) userService.getLoggedUser().get();
-
+        model.addAttribute("seller", seller);
         if (bindingResult.hasErrors()) {
             return "productForm";
         }
@@ -96,6 +96,7 @@ public class ProductController {
 
             productService.saveProduct(product);
             redirectAttributes.addFlashAttribute("msg", "Success");
+            redirectAttributes.addFlashAttribute("seller", seller);
             return "redirect:/seller/product/productAddForm";
 
     }
