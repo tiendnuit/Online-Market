@@ -22,7 +22,7 @@
                 <tr>
 
                     <span th:each="product : ${productList}" clas="card">
-                         <td class="td-style">
+                         <td>
                             <span class="card" style="width: 18rem;">
                                <img class='img-thumbnail' th:src="'data:image/jpeg;base64,' + ${imgUtil.getImgData(product.getData())}" th:class="image-style"/>
                                <span class="card-body">
