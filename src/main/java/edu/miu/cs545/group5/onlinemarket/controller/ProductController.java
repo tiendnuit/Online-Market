@@ -10,10 +10,12 @@ import edu.miu.cs545.group5.onlinemarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -144,14 +146,15 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/deleteProduct/{productId}")
-    public String deleteProductById(@PathVariable("productId")Long productId, Model model){
+    public ResponseEntity<?> deleteProductById(@PathVariable("productId")Long productId, Model model){
         Product product = productService.findProductById(productId);
         if(product != null){
             productService.deleteProductById(productId);
         }
         Seller seller = (Seller) userService.getLoggedUser().get();
         model.addAttribute("seller", seller);
-        return "manageProduct";
+
+        return ResponseEntity.ok("Ok");
     }
 
     @GetMapping("/editProduct/{productId}")
@@ -180,5 +183,10 @@ public class ProductController {
         model.addAttribute("seller", seller);
         redirectAttributes.addFlashAttribute("msg", "Success");
         return "sellerDashboard";
+    }
+
+    @RequestMapping("/modal")
+    public String openModal(){
+        return "modal";
     }
 }
