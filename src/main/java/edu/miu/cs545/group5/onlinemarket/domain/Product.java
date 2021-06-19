@@ -31,6 +31,7 @@ public class Product implements Serializable {
     private Integer stock;
 
     @NotBlank
+    @Lob
     private String description;
 
 

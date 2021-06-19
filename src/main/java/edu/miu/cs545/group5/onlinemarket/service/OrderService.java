@@ -16,7 +16,7 @@ public interface OrderService {
 
     public Page<Order> findPageableOrderBySellerId(Pageable pageable, Long id);
     public void cancelOrderById(Long orderId);
-    public int updateOrderStatusBuOrderId(Long orderId, String status);
+    public int updateOrderStatusByOrderId(Long orderId, String status);
 
     Order getOrderById(Long id);
 }

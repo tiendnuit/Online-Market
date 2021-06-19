@@ -72,7 +72,7 @@
                     <h4 class="price text-dark">Price: <span class="text-danger" th:text="${'$' + product.price}">$</span></h4>
 
                     <div class="action" sec:authorize="hasAuthority('BUYER')">
-                        <button class="add-to-cart btn btn-success btn-follow" type="button">add to cart</button>
+                        <button th:id="${product.id}" class="add-to-cart btn btn-success btn-cart" type="button">add to cart</button>
                         <button th:if="${product.currentUserReview} == null" type="button" class="btn btn-danger" data-toggle="modal" data-target="#form"> Review Product </button>
                         <div class="mt-3" th:if="${product.currentUserReview} != null">
                             <h6 class="text-secondary">Your review: <small class="text-muted text-" th:if="${product.currentUserReview.approve} == false"> (waiting approve)</small> </h6>
@@ -118,6 +118,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 <script type="text/javascript" th:src="@{/js/buyer.js}"></script>
-
+<script type="text/javascript" th:src="@{/js/cart.js}"></script>
 </body>
 </html>
