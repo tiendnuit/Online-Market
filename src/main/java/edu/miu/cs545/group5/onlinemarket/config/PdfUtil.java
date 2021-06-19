@@ -16,6 +16,7 @@ public class PdfUtil {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
+
             PdfDiv divHeader = new PdfDiv();
             divHeader.addElement(new Phrase("Order Receipt"));
             divHeader.addElement(new Phrase("Order Id: " + order.getId()));

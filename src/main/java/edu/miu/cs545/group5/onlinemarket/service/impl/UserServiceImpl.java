@@ -113,12 +113,12 @@ public class UserServiceImpl implements UserService {
     public void activateBuyer(Long id) {
         User user = userRepository.findById(id).get();
         Buyer  buyer = (Buyer) user;
-        if(user.getActive()==1){
+
+        if(user.getActive()==1)
             buyer.setActive(0);
-        }
-        else{
+        else
             buyer.setActive(1);
-        }
+
         userRepository.save(buyer);
     }
     @Override

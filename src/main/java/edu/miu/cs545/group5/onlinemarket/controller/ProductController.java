@@ -57,6 +57,7 @@ public class ProductController {
     public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Seller seller = (Seller) userService.getLoggedUser().get();
 
+
         if (bindingResult.hasErrors()) {
             return "productForm";
         }

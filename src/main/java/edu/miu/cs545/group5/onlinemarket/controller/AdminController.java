@@ -25,7 +25,6 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-
     @Autowired
     BuyerService buyerService;
 

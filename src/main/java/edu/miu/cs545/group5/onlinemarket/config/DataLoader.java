@@ -2,18 +2,18 @@ package edu.miu.cs545.group5.onlinemarket.config;
 
 import edu.miu.cs545.group5.onlinemarket.domain.*;
 import edu.miu.cs545.group5.onlinemarket.repository.CategoryRepository;
+
 import edu.miu.cs545.group5.onlinemarket.repository.ProductRepository;
 import edu.miu.cs545.group5.onlinemarket.repository.UserRepository;
-import edu.miu.cs545.group5.onlinemarket.service.CategoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Component
@@ -23,6 +23,7 @@ public class DataLoader implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
     private CategoryRepository categoryRepository;
     private ProductRepository productRepository;
+
 
     @Autowired
     public DataLoader(UserRepository userRepository,
@@ -113,7 +114,6 @@ public class DataLoader implements ApplicationRunner {
 
         //productRepository.save(product1);
         productRepository.saveAll(Arrays.asList(product1, product2, product3, product4));
-
 
     }
 }
