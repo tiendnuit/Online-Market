@@ -11,4 +11,5 @@ public class LoginExceptionController {
     public String accessDenied() {
         return "access-denied";
     }
+
 }
