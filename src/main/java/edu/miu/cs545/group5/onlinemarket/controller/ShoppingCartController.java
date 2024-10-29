@@ -97,4 +97,6 @@ public class ShoppingCartController {
 
         return shoppingCart.getNumberOfProducts();
     }
+
+    // good work here
 }
