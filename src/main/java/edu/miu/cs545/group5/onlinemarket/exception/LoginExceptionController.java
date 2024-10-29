@@ -12,4 +12,5 @@ public class LoginExceptionController {
         return "access-denied";
     }
 
+    // This is edited version
 }
